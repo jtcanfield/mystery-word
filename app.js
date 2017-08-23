@@ -3,7 +3,7 @@ const path = require('path');
 const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const app = express();
-const file = './data.json';
+const userDataFile = require('./data.json');
 const session = require('express-session');
 const fs = require('fs');
 const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
@@ -16,6 +16,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
+function getUser(username){
+  return userDataFile.users.find(function (user) {
+    return user.username == username;
+  });
+}
+
+
+
 
 
 app.get("/", function (req, res) {
@@ -23,7 +31,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/login", function (req, res) {
-  res.render("index");
+  res.render("login");
 });
 
 app.get("/signup", function (req, res) {
@@ -35,9 +43,17 @@ app.post("/", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+      if (err){
+          console.log(err);
+      } else {
+      obj = JSON.parse(data);
+      console.log(getUser(username));
+  }});
   res.redirect('/login');
 });
-
 app.post("/signup", function (req, res) {
   res.redirect('/signup');
 });
