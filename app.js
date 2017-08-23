@@ -8,7 +8,6 @@ const session = require('express-session');
 const fs = require('fs');
 const wordFile = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
 app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}}));
-const main = require("./public/main.js");
 app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 app.set('views', './views');
@@ -123,32 +122,32 @@ app.post("/submitletter", function (req, res) {
       return
     }
     req.sessionStore.guessed.push(lettersubmitted);
+    if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Wrong!"});
+      return
+    }
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
       req.sessionStore.word.map((x, index) =>{
         if (x === lettersubmitted){
           req.sessionStore.emptyWord[index] = lettersubmitted;
         }
       });
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
-      return
-    }
-    if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Wrong!"});
-      return
+      gameFinish = true;
+      req.sessionStore.emptyWord.map((x) =>{
+        if (x === "_"){
+          gameFinish = false;
+        }
+      });
+      if (gameFinish === true){
+        res.render("index", {username:authedUser});
+        return
+      } else {
+        res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
+      }
     } else {
       console.log("GAME BROKE!");
       console.log(req.sessionStore);
     }
-  }
-  gameFinish = true;
-  req.sessionStore.emptyWord.map((x) =>{
-    if (x === "_"){
-      gameFinish = false;
-    }
-  });
-  if (gameActive === true && gameFinish === true){
-    res.render("index", {username:authedUser});
-    return
   }
   // res.render("index", {username : authedUser});
 });
