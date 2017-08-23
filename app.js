@@ -23,6 +23,7 @@ function getUser(username){
 }
 var authedUser = "";
 var gameActive = false;
+var gameFinish = false;
 
 
 
@@ -114,7 +115,13 @@ app.post("/startgame:dynamic", function (req, res) {
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
-  if (gameActive === true){
+  gameFinish = true;
+  req.sessionStore.emptyWord.map((x) =>{
+    if (x === "_"){
+      gameFinish = false;
+    }
+  });
+  if (gameActive === true && gameFinish === false){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
       res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"You Already Guessed That Letter!"});
@@ -133,6 +140,10 @@ app.post("/submitletter", function (req, res) {
     }
     console.log("GAME BROKE!");
     console.log(req.sessionStore);
+    return
+  }
+  if (gameActive === true && gameFinish === true){
+
     return
   }
   // res.render("index", {username : authedUser});
