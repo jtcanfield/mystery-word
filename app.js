@@ -18,10 +18,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 function getUser(username){
   return userDataFile.users.find(function (user) {
-    return user.username == username;
+    return user.username.toLowerCase() == username.toLowerCase();
   });
 }
-
+var authedUser = "";
 
 
 
@@ -31,10 +31,12 @@ app.get("/", function (req, res) {
 });
 
 app.get("/login", function (req, res) {
+  authedUser = "";
   res.render("login");
 });
 
 app.get("/signup", function (req, res) {
+  authedUser = "";
   res.render("signup");
 });
 
@@ -43,30 +45,41 @@ app.post("/", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  var username = req.body.username;
-  var password = req.body.password;
   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
       obj = JSON.parse(data);
-      console.log(getUser(username));
+      var userCheck = getUser(req.body.username);
+      if (userCheck !== undefined && req.body.password === userCheck.password){
+        authedUser = req.body.username;
+        res.redirect("/");
+        return
+      } else {
+        res.render("login", {status:"Incorrect User Id or Password"});
+        return
+      }
   }});
-  res.redirect('/login');
 });
 app.post("/signup", function (req, res) {
   res.redirect('/signup');
 });
 
 
-
+app.post("/logout", function (req, res) {
+  authedUser = "";
+  res.redirect('/login');
+});
 app.post("/loginredirect", function (req, res) {
+  authedUser = "";
   res.redirect('/login');
 });
 app.post("/signupredirect", function (req, res) {
+  authedUser = "";
   res.redirect('/signup');
 });
 app.get("/:dynamic", function (req, res) {
+  console.log("DYNAMIC TRIGGERED:")
   console.log(req.params.dynamic);
   res.redirect('/');
 });
