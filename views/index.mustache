@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+ <html>
+ 	<head>
+ 		<meta charset="utf-8">
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 		<title></title>
+ 		<meta name="description" content=" " />
+ 		<meta name="author" content=" " />
+ 		<meta name="HandheldFriendly" content="true" />
+ 		<meta name="MobileOptimized" content="320" />
+ 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+ 	</head>
+ 	<body>
+    <form action="/" method="post">
+      <p>Add to the list</p>
+      <input type="text" name="inputtodo"/>
+      <button type="submit">Submit</button>
+    </form>
+    <h2>To Do:</h2>
+    {{#todosMustache}}
+    <form id={{.}} action="/{{.}}" method="post">
+      <button type="submit">Delete</button><span>{{.}}</span>
+    </form>
+    {{/todosMustache}}
+    <!-- <form action="/1" method="post">
+      <button type="submit">Delete Checked</button>
+    </form> -->
+    <h2>Checked:</h2>
+    {{#doneMustache}}
+    <p>{{.}}</p>
+    {{/doneMustache}}
+ 	  <script type="text/javascript" src="main.js"></script>
+ 	</body>
+ </html>
