@@ -22,7 +22,7 @@ function getUser(username){
   });
 }
 var authedUser = "";
-
+var gameActive = false;
 
 
 
@@ -73,8 +73,16 @@ app.post("/login", function (req, res) {
       }
   }});
 });
+app.post("/startgame", function (req, res) {
+  if (authedUser === ""){res.redirect('/login');return}
+  gameActive = true;
+  req.sessionStore.word=
+  res.render("index", {username : authedUser});
+});
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
+  if (gameActive === false){res.render("index", {username : authedUser});}
+  if (gameActive === true){}
   console.log("BEFORE");
   console.log(req.sessionStore);
   req.sessionStore.input = req.body.lettersubmitted.toLowerCase();

@@ -13,13 +13,22 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
+    {{#username}}
     <h1>Welcome, {{username}}!</h1>
-    <form action="/logout" method="post">
-      <button type="submit">Logout</button>
+    <form action="/startgame" method="post">
+      <button type="submit">Start Game!</button>
     </form>
+    {{/username}}
+    {{^username}}
+    <h2>{{emptyWord}}
     <br>
     <form action="/submitletter" method="post">
       <input type="text" name="lettersubmitted" maxlength="1" required>
+      <button type="submit">Submit</button>
+    </form>
+    {{/username}}
+    <br><br><br><br>
+    <form action="/logout" method="post">
       <button type="submit">Logout</button>
     </form>
     <br>
