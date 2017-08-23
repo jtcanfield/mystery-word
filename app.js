@@ -13,27 +13,47 @@ app.engine('mustache', mustache());
 app.set('view engine', 'mustache');
 app.set('views', './views');
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Set app to use bodyParser()` middleware.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
 
 
 app.get("/", function (req, res) {
+  res.render("index");
+});
+
+app.get("/login", function (req, res) {
+  res.render("index");
+});
+
+app.get("/signup", function (req, res) {
+  res.render("signup");
 });
 
 app.post("/", function (req, res) {
   res.redirect('/');
 });
 
+app.post("/login", function (req, res) {
+  res.redirect('/login');
+});
 
-app.post("/:dynamic", function (req, res) {
-  console.log("Well, that button worked");
+app.post("/signup", function (req, res) {
+  res.redirect('/signup');
+});
+
+
+
+app.post("/loginredirect", function (req, res) {
+  res.redirect('/login');
+});
+app.post("/signupredirect", function (req, res) {
+  res.redirect('/signup');
+});
+app.get("/:dynamic", function (req, res) {
   console.log(req.params.dynamic);
   res.redirect('/');
 });
-
 
 app.listen(3000, function () {
   console.log('Hosted on local:3000');

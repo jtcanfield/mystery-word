@@ -13,8 +13,17 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
-    <h2>To Do:</h2>
-    <h2>Checked:</h2>
+    <form action="/login" method="post">
+      <p>Login Username:</p>
+      <input type="text" name="username"/>
+      <p>Login Password:</p>
+      <input type="text" name="password"/>
+      <p class="error">{{status}}</p>
+      <button type="submit">Login</button>
+    </form><br>
+    <form action="/signupredirect" method="post">
+      <button type="submit">Sign Up</button>
+    </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>

@@ -13,8 +13,23 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
-    <h2>To Do:</h2>
-    <h2>Checked:</h2>
+    <h1>Sign Up!</h1>
+    <form action="/signupsubmit" method="post">
+      <p>Username:</p>
+      <input type="text" name="username"required>
+      <p>Password:</p>
+      <input type="text" name="password1"required>
+      <p>Retype Password:</p>
+      <input type="text" name="password2"required>
+      <p>Valid Email:</p>
+      <input type="email" name="email"required>
+      <br><br>
+      <button type="submit">Sign Up</button>
+      <p class="error">{{status}}</p>
+    </form><br>
+    <form action="/loginredirect" method="post">
+      <button type="submit">Already a user? Login</button>
+    </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>
