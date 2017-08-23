@@ -135,9 +135,10 @@ app.post("/submitletter", function (req, res) {
     if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
       res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Wrong!"});
       return
+    } else {
+      console.log("GAME BROKE!");
+      console.log(req.sessionStore);  
     }
-    console.log("GAME BROKE!");
-    console.log(req.sessionStore);
   }
   gameFinish = true;
   req.sessionStore.emptyWord.map((x) =>{
