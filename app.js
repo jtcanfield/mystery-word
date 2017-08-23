@@ -137,7 +137,7 @@ app.post("/submitletter", function (req, res) {
       return
     } else {
       console.log("GAME BROKE!");
-      console.log(req.sessionStore);  
+      console.log(req.sessionStore);
     }
   }
   gameFinish = true;
