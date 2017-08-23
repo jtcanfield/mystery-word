@@ -73,6 +73,7 @@ app.post("/login", function (req, res) {
       }
   }});
 });
+
 app.post("/startgame:dynamic", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   var arrayOfPossibleWords = [];
@@ -101,22 +102,27 @@ app.post("/startgame:dynamic", function (req, res) {
     default:
   }
   var wordindex = Math.floor(Math.random() * arrayOfPossibleWords.length);
-  req.sessionStore.word = arrayOfPossibleWords[wordindex];
-  console.log(req.sessionStore.word);
+  req.sessionStore.word = [...arrayOfPossibleWords[wordindex]];
+  var emptyArray = [];
+  req.sessionStore.word.map((x) =>{emptyArray.push("_")});
+  req.sessionStore.emptyWord = emptyArray;
   gameActive = true;
-  res.render("index");
+  res.render("index", {emptyWord:req.sessionStore.emptyWord});
 });
+
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
-  if (gameActive === false){res.render("index", {username : authedUser});}
-  if (gameActive === true){}
-  console.log("BEFORE");
-  console.log(req.sessionStore);
-  req.sessionStore.input = req.body.lettersubmitted.toLowerCase();
-  console.log("AFTER");
-  console.log(req.sessionStore);
-  res.render("index", {username : authedUser});
+  if (gameActive === false){res.render("index", {username : authedUser});return}
+  if (gameActive === true){
+    req.sessionStore.guessed.push(req.body.lettersubmitted.toLowerCase());
+    console.log(req.sessionStore.guessed.indexOf("g"));
+    res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed});
+    console.log(req.sessionStore);
+    return
+  }
+  // res.render("index", {username : authedUser});
 });
+
 app.post("/signup", function (req, res) {
   var validform = true;
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
