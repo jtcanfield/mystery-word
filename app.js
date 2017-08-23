@@ -6,7 +6,7 @@ const app = express();
 const userDataFile = require('./data.json');
 const session = require('express-session');
 const fs = require('fs');
-const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
+const wordFile = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
 app.use(session({ secret: 'this-is-a-secret-token', cookie: { maxAge: 60000, httpOnly: false}}));
 const main = require("./public/main.js");
 app.engine('mustache', mustache());
@@ -73,11 +73,30 @@ app.post("/login", function (req, res) {
       }
   }});
 });
-app.post("/startgame", function (req, res) {
+app.post("/startgame:dynamic", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
+  console.log(req.params.dynamic);
+  var wordindex = 0;
+  wordindex = Math.floor(Math.random() * wordFile.length);
+  var arrayOfPossibleWords = [];
+  switch (req.params.dynamic) {
+    case "easy":
+      wordFile.map((x) =>{
+        console.log(x);
+      });
+      break;
+    case "medium":
+
+      break;
+    case "hard":
+
+      break;
+    default:
+  }
+  // if (req.params.dynamic === "easy" && ){
+  req.sessionStore.word = wordFile[wordindex];
   gameActive = true;
-  req.sessionStore.word=
-  res.render("index", {username : authedUser});
+  res.render("index");
 });
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
