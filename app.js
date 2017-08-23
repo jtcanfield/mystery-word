@@ -73,7 +73,15 @@ app.post("/login", function (req, res) {
       }
   }});
 });
-
+app.post("/submitletter", function (req, res) {
+  if (authedUser === ""){res.redirect('/login');return}
+  console.log("BEFORE");
+  console.log(req.sessionStore);
+  req.sessionStore.input = req.body.lettersubmitted.toLowerCase();
+  console.log("AFTER");
+  console.log(req.sessionStore);
+  res.render("index", {username : authedUser});
+});
 app.post("/signup", function (req, res) {
   var validform = true;
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
