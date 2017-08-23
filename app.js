@@ -27,7 +27,7 @@ var authedUser = "";
 
 
 app.get("/", function (req, res) {
-  if (authedUser === ""){res.redirect('/login');}
+  if (authedUser === ""){res.redirect('/login');return}
   res.render("index");
 });
 
@@ -43,10 +43,12 @@ app.get("/signup", function (req, res) {
 
 app.get("/statistics", function (req, res) {
   if (authedUser === ""){
-
+    res.render("statistics");
+    return
   }
   if (authedUser !== ""){
     res.render("statistics", {username:authedUser});
+    return
   }
 });
 
