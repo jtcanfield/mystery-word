@@ -74,8 +74,6 @@ app.post("/login", function (req, res) {
   }});
 });
 
-
-
 app.post("/signup", function (req, res) {
   var validform = true;
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
