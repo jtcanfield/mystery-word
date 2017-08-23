@@ -123,10 +123,15 @@ app.post("/submitletter", function (req, res) {
     req.sessionStore.guessed.push(lettersubmitted);
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
       var indexOfCorrectLetter = req.sessionStore.word.indexOf(lettersubmitted);
+      req.sessionStore.emptyWord[indexOfCorrectLetter] = lettersubmitted;
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
+      return
     }
-    req.sessionStore.guessed.push(lettersubmitted);
-    console.log(req.sessionStore.guessed.indexOf("z"));
-    res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed});
+    if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Wrong!"});
+      return
+    }
+    console.log("GAME BROKE!");
     console.log(req.sessionStore);
     return
   }
