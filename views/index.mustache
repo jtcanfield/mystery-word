@@ -15,8 +15,14 @@
  	<body>
     {{#username}}
     <h1>Welcome, {{username}}!</h1>
-    <form action="/startgame" method="post">
-      <button type="submit">Start Game!</button>
+    <form action="/startgameeasy" method="post">
+      <button type="submit">Start Easy Game!</button>
+    </form>
+    <form action="/startgamemedium" method="post">
+      <button type="submit">Start Medium Game!</button>
+    </form>
+    <form action="/startgamehard" method="post">
+      <button type="submit">Start Hard Game!</button>
     </form>
     {{/username}}
     {{^username}}
