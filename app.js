@@ -120,7 +120,7 @@ app.post("/signup", function (req, res) {
         fs.writeFile('data.json', json, 'utf8');
     }});
   }
-  authSession = req.body.username;
+  authedUser = req.body.username;
   res.redirect('/');
 });
 app.post("/logout", function (req, res) {
