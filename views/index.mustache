@@ -29,6 +29,8 @@
     <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
     <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
     <br>
+    <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
+    <br>
     <form action="/submitletter" method="post">
       <input type="text" name="lettersubmitted" maxlength="1" required>
       <button type="submit">Submit</button>

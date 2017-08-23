@@ -106,6 +106,7 @@ app.post("/startgame:dynamic", function (req, res) {
   var emptyArray = [];
   req.sessionStore.word.map((x) =>{emptyArray.push("_")});
   req.sessionStore.emptyWord = emptyArray;
+  req.sessionStore.guessed = [];
   gameActive = true;
   res.render("index", {emptyWord:req.sessionStore.emptyWord});
 });
@@ -114,8 +115,17 @@ app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
   if (gameActive === true){
-    req.sessionStore.guessed.push(req.body.lettersubmitted.toLowerCase());
-    console.log(req.sessionStore.guessed.indexOf("g"));
+    var lettersubmitted = req.body.lettersubmitted.toLowerCase();
+    if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"You Already Guessed That Letter!"});
+      return
+    }
+    req.sessionStore.guessed.push(lettersubmitted);
+    if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
+      var indexOfCorrectLetter = req.sessionStore.word.indexOf(lettersubmitted);
+    }
+    req.sessionStore.guessed.push(lettersubmitted);
+    console.log(req.sessionStore.guessed.indexOf("z"));
     res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed});
     console.log(req.sessionStore);
     return
