@@ -109,6 +109,7 @@ app.post("/startgame:dynamic", function (req, res) {
   req.sessionStore.emptyWord = emptyArray;
   req.sessionStore.guessed = [];
   gameActive = true;
+  console.log(req.sessionStore);
   res.render("index", {emptyWord:req.sessionStore.emptyWord});
 });
 
@@ -129,8 +130,14 @@ app.post("/submitletter", function (req, res) {
     }
     req.sessionStore.guessed.push(lettersubmitted);
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
-      var indexOfCorrectLetter = req.sessionStore.word.indexOf(lettersubmitted);
-      req.sessionStore.emptyWord[indexOfCorrectLetter] = lettersubmitted;
+      var x = 0;
+      while (x < 20){
+        if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
+          var indexOfCorrectLetter = req.sessionStore.word.indexOf(lettersubmitted);
+          req.sessionStore.emptyWord[indexOfCorrectLetter] = lettersubmitted;
+        } else {}
+        x++
+      }
       res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
       return
     }
@@ -143,7 +150,7 @@ app.post("/submitletter", function (req, res) {
     return
   }
   if (gameActive === true && gameFinish === true){
-
+    res.render("index", {username:authedUser});
     return
   }
   // res.render("index", {username : authedUser});
