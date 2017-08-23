@@ -29,13 +29,11 @@
       <br><br>
       <button type="submit">Sign Up</button>
     </form>
-    {{#username}}
+    {{^username}}
     <br>
     <form action="/loginredirect" method="post">
       <button type="submit">Login</button>
     </form>
-    {{/username}}
-    {{^username}}
     <br>
     <form action="/signupredirect" method="post">
       <button type="submit">Sign Up</button>
