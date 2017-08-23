@@ -116,12 +116,6 @@ app.post("/startgame:dynamic", function (req, res) {
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
-  gameFinish = true;
-  req.sessionStore.emptyWord.map((x) =>{
-    if (x === "_"){
-      gameFinish = false;
-    }
-  });
   if (gameActive === true && gameFinish === false){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
@@ -130,14 +124,11 @@ app.post("/submitletter", function (req, res) {
     }
     req.sessionStore.guessed.push(lettersubmitted);
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
-      var x = 0;
-      while (x < 20){
-        if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
-          var indexOfCorrectLetter = req.sessionStore.word.indexOf(lettersubmitted);
-          req.sessionStore.emptyWord[indexOfCorrectLetter] = lettersubmitted;
-        } else {}
-        x++
-      }
+      req.sessionStore.word.map((x, index) =>{
+        if (x === lettersubmitted){
+          req.sessionStore.emptyWord[index] = lettersubmitted;
+        }
+      });
       res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
       return
     }
@@ -147,8 +138,13 @@ app.post("/submitletter", function (req, res) {
     }
     console.log("GAME BROKE!");
     console.log(req.sessionStore);
-    return
   }
+  gameFinish = true;
+  req.sessionStore.emptyWord.map((x) =>{
+    if (x === "_"){
+      gameFinish = false;
+    }
+  });
   if (gameActive === true && gameFinish === true){
     res.render("index", {username:authedUser});
     return
