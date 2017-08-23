@@ -27,6 +27,7 @@ var authedUser = "";
 
 
 app.get("/", function (req, res) {
+  if (authedUser === ""){res.redirect('/login');}
   res.render("index");
 });
 
@@ -38,6 +39,15 @@ app.get("/login", function (req, res) {
 app.get("/signup", function (req, res) {
   authedUser = "";
   res.render("signup");
+});
+
+app.get("/statistics", function (req, res) {
+  if (authedUser === ""){
+
+  }
+  if (authedUser !== ""){
+    res.render("statistics", {username:authedUser});
+  }
 });
 
 app.post("/", function (req, res) {
@@ -77,6 +87,9 @@ app.post("/loginredirect", function (req, res) {
 app.post("/signupredirect", function (req, res) {
   authedUser = "";
   res.redirect('/signup');
+});
+app.post("/statisticsredirect", function (req, res) {
+  res.redirect('/statistics');
 });
 app.get("/:dynamic", function (req, res) {
   console.log("DYNAMIC TRIGGERED:")
