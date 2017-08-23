@@ -75,26 +75,34 @@ app.post("/login", function (req, res) {
 });
 app.post("/startgame:dynamic", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
-  console.log(req.params.dynamic);
-  var wordindex = 0;
-  wordindex = Math.floor(Math.random() * wordFile.length);
   var arrayOfPossibleWords = [];
   switch (req.params.dynamic) {
     case "easy":
       wordFile.map((x) =>{
-        console.log(x);
+        if (x.length >= 4 && x.length <= 6){
+          arrayOfPossibleWords.push(x);
+        }
       });
       break;
     case "medium":
-
+      wordFile.map((x) =>{
+        if (x.length >= 6 && x.length <= 8){
+          arrayOfPossibleWords.push(x);
+        }
+      });
       break;
     case "hard":
-
+      wordFile.map((x) =>{
+        if (x.length > 8){
+          arrayOfPossibleWords.push(x);
+        }
+      });
       break;
     default:
   }
-  // if (req.params.dynamic === "easy" && ){
-  req.sessionStore.word = wordFile[wordindex];
+  var wordindex = Math.floor(Math.random() * arrayOfPossibleWords.length);
+  req.sessionStore.word = arrayOfPossibleWords[wordindex];
+  console.log(req.sessionStore.word);
   gameActive = true;
   res.render("index");
 });
