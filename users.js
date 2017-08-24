@@ -1,8 +1,6 @@
 const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const express = require("express");
-const router = express.Router();
 const userDataFile = require('./data.json');
 
 function getUser(username){
@@ -12,7 +10,7 @@ function getUser(username){
 }
 
 var checkLogin = function (usrname, pass, callback){
-  fs.readFile('data.json', 'utf8', function (err, data){
+  fs.readFile('data.json', 'utf8', function(err, data){
     if (err){
         console.log(err);
     } else {
@@ -29,27 +27,36 @@ var checkLogin = function (usrname, pass, callback){
   });
 }
 
-function checkSignUp(username, email){
-  var toreturn = 0;
+var checkExistingUsers = function(username, email, callback){
   userDataFile.users.map((x) =>{
-    var usernamestring = x.username.toLowerCase();
-    var emailstring = x.email.toLowerCase();
-    if (usernamestring === username){
-      res.render('signup', {status:"Username already exists, choose another user name"});
-      toreturn = 1;
+    if (x.username.toLowerCase() === username){
+      callback(true, "Username already exists, choose another user name");
       return
     }
-    if (emailstring === email){
-      res.render('signup', {status:"Email already exists. Lost your Username or Password? Email me!"});
-      toreturn = 2;
+    if (x.email.toLowerCase() === email){
+      callback(true, "Email already exists. Lost your Username or Password? Email me!");
       return
     }
   });
-  return toreturn
+}
+
+var addUser = function(newusername, newpassword, newemail, callback){
+  fs.readFile('data.json', 'utf8', function(err, data){
+    if (err){
+        console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      obj.users.push({username: newusername, password: newpassword, email: newemail});
+      json = JSON.stringify(obj);
+      fs.writeFile('data.json', json, 'utf8');
+    }
+  });
+  callback();
 }
 
 module.exports = {
   userObjectPull:getUser,
   checkLogin:checkLogin,
-  checkSignUp:checkSignUp
+  checkExistingUsers:checkExistingUsers,
+  addUser:addUser
 }

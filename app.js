@@ -3,7 +3,6 @@ const path = require('path');
 const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const app = express();
-// const userDataFile = require('./data.json');
 const userFile = require('./users.js');
 const statsFile = require('./stats.js');
 const session = require('express-session');
@@ -22,6 +21,9 @@ var gameActive = false;
 var gameWin = false;
 var gameLoss = false;
 var timeTaken = 0;
+function isLetter(c) {
+  return c.toLowerCase() != c.toUpperCase();
+};
 function timerBeginCount(){
   x = setInterval(function() {
     timeTaken += 1000;
@@ -30,8 +32,6 @@ function timerBeginCount(){
     finalTime = mins + "m " + secs + "s ";
   }, 1000);
 };
-
-
 
 app.get("/", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
@@ -115,10 +115,6 @@ app.post("/startgame:dynamic", function (req, res) {
   res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"});
 });
 
-function isLetter(c) {
-  return c.toLowerCase() != c.toUpperCase();
-};
-
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
@@ -181,6 +177,14 @@ app.post("/submitletter", function (req, res) {
 
 app.post("/signup", function (req, res) {
   var validform = true;
+  userFile.checkExistingUsers(req.body.username.toLowerCase(), req.body.email.toLowerCase(), function(error, errordescrip){
+    if (error === true){
+      validform = false;
+      res.render('signup', {status:errordescrip});
+      return
+    }
+  });
+  if (validform === false){return}
   if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined){
     res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
@@ -197,13 +201,9 @@ app.post("/signup", function (req, res) {
     res.render('signup', {status:"Username must have at least 4 characters"});
     return
   }
-  var signupverification = userFile.checkSignUp(req.body.username.toLowerCase(), req.body.email.toLowerCase());
-  if (signupverification === 1){
-    res.render('signup', {status:"Username already exists, choose another user name"});
-  }
-  if (signupverification === 2){
-    res.render('signup', {status:"Email already exists. Lost your Username or Password? Email me!"});
-  }
+  userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
+
+  })
   // if (signupverification === 0){
   //   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
   //     if (err){
