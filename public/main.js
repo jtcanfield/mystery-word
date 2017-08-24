@@ -9,8 +9,6 @@ if (word){
       wordarray.push(" "+x+" ");
     }
   });
-  // console.log(wordarray);
-  // console.log(wordarray.toString().replace(',',' '));
   word.innerHTML = wordarray.join('\u0020');
 }
 var textFocus = document.querySelector('input');
