@@ -129,9 +129,6 @@ function isLetter(c) {
   return c.toLowerCase() != c.toUpperCase();
 };
 
-app.get("/submitletter", function (req, res) {
-  console.log("THIS IS NOT ALLOWED");
-});
 
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}

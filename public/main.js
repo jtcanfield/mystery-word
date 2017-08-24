@@ -1,3 +1,4 @@
+//When game is over, The Below fills in the missing letters
 var word = document.querySelector('h2');
 if (word){
   var wordcontent = document.querySelector('h2').textContent.split(" ");
@@ -11,12 +12,12 @@ if (word){
   });
   word.innerHTML = wordarray.join('\u0020');
 }
-
+//Automatically focuses the text to the first input
 var textFocus = document.querySelector('input');
 if (textFocus !== null){
   textFocus.focus();
 }
-
+//keeps track of time on client side
 var timekeeper = document.getElementById('timekeeper');
 if (timekeeper){
   function timerBeginCount(){
@@ -31,4 +32,8 @@ if (timekeeper){
     }, 1000);
   };
   timerBeginCount();
+}
+//Edits URL to prevent incorrect refresh
+if (window.location.pathname === "/startgamehard" || window.location.pathname === "/startgamemedium" ||  window.location.pathname === "/startgameeasy" ||  window.location.pathname === "/submitletter"){
+  window.history.pushState("", "", '/');
 }
