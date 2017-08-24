@@ -58,12 +58,15 @@ if (fullstats !== null){
 var profilepage = document.getElementById("profilepageinfo");
 if (profilepage !== null){
   var jsonObject = JSON.parse(profilepage.textContent);
+  console.log(jsonObject)
   profilepage.innerHTML = "";
   var newliteral = document.createElement("div");
   newliteral.setAttribute("class", "playerstats");
   let holder = `
     <h1>${jsonObject.username}</h1>
-    <p>Games: ${jsonObject.games}  Wins: ${jsonObject.wins} Losses: ${jsonObject.losses}</p>
+    <div>
+      <span>Games: ${jsonObject.games}</span><span>Wins: ${jsonObject.wins}</span><span>Losses: ${jsonObject.losses}</span>
+    </div>
     <p>Avg Word Length: ${jsonObject.avgwordlength}</p>
   `;
   newliteral.innerHTML = holder;
