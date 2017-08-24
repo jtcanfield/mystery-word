@@ -3,7 +3,8 @@ const path = require('path');
 const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const app = express();
-const userDataFile = require('./data.json');
+// const userDataFile = require('./data.json');
+const userFile = require('./users.js');
 const statsFile = require('./stats.js');
 const session = require('express-session');
 const fs = require('fs');
@@ -16,11 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
-function getUser(username){
-  return userDataFile.users.find(function (user) {
-    return user.username.toLowerCase() == username.toLowerCase();
-  });
-}
 var authedUser = "";
 var gameActive = false;
 var gameWin = false;
@@ -68,22 +64,16 @@ app.post("/", function (req, res) {
 });
 
 app.post("/login", function (req, res) {
-  fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
-      if (err){
-          console.log(err);
-      } else {
-      obj = JSON.parse(data);
-      var userCheck = getUser(req.body.username);
-      if (userCheck !== undefined && req.body.password === userCheck.password){
-        authedUser = req.body.username;
-        res.redirect("/");
-        return
-      } else {
-        res.render("login", {status:"Incorrect User Id or Password"});
-        return
-      }
-  }});
+  userFile.checkLogin(req.body.username, req.body.password, function(x){
+    if (x){
+      authedUser = req.body.username;
+      res.redirect("/");
+    } else {
+      res.render("login", {status:"Incorrect User Id or Password"});
+    }
+  });
 });
+
 
 app.post("/startgame:dynamic", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
@@ -207,36 +197,28 @@ app.post("/signup", function (req, res) {
     res.render('signup', {status:"Username must have at least 4 characters"});
     return
   }
-  userDataFile.users.map((x) =>{
-    var usernamestring = x.username;
-    var emailstring = x.email;
-    if (usernamestring.toLowerCase() === req.body.username.toLowerCase()){
-      res.render('signup', {status:"Username already exists, choose another user name"});
-      validform = false;
-      return
-    }
-    if (emailstring.toLowerCase() === req.body.email.toLowerCase()){
-      res.render('signup', {status:"Email already exists. Lost your Username or Password? Email me!"});
-      validform = false;
-      return
-    }
-  });
-  if (validform === false){return};
-  if (validform === true){
-    fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
-      if (err){
-          console.log(err);
-      } else {
-        obj = JSON.parse(data);
-        if (req.body.email === null || req.body.email === undefined){
-          obj.users.push({username: req.body.username, password: req.body.password2, email: ""});
-        } else {
-          obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
-        }
-        json = JSON.stringify(obj);
-        fs.writeFile('data.json', json, 'utf8');
-    }});
+  var signupverification = userFile.checkSignUp(req.body.username.toLowerCase(), req.body.email.toLowerCase());
+  if (signupverification === 1){
+    res.render('signup', {status:"Username already exists, choose another user name"});
   }
+  if (signupverification === 2){
+    res.render('signup', {status:"Email already exists. Lost your Username or Password? Email me!"});
+  }
+  // if (signupverification === 0){
+  //   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
+  //     if (err){
+  //         console.log(err);
+  //     } else {
+  //       obj = JSON.parse(data);
+  //       if (req.body.email === null || req.body.email === undefined){
+  //         obj.users.push({username: req.body.username, password: req.body.password2, email: ""});
+  //       } else {
+  //         obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
+  //       }
+  //       json = JSON.stringify(obj);
+  //       fs.writeFile('data.json', json, 'utf8');
+  //   }});
+  // }
   authedUser = req.body.username;
   res.redirect('/');
 });
