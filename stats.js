@@ -21,11 +21,10 @@ function changestats(name, win, loss, word, wordlength, time){
       } else {
         obj = JSON.parse(data);
         var userdata = obj.users[getStats(name)];
-        console.log(userdata);
-        userdata.games += 1;
-        userdata.wins += win;
-        userdata.losses += loss;
-        userdata.words.push(word);
+        userdata.games = Number(userdata.games)+ 1;
+        userdata.wins = Number(userdata.wins)+Number(win);
+        userdata.losses = Number(userdata.losses)+Number(loss);
+        userdata.words.push(word.join(""));
         userdata.wordlengths.push(wordlength);
         userdata.avgwordlength = (userdata.wordlengths.reduce((a,b) => a+b, 0))/userdata.wordlengths.length;
         userdata.times.push(time);
