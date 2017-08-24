@@ -37,6 +37,14 @@
       <button type="submit">Submit</button>
     </form>
     {{/game}}
+    {{#gamefinal}}
+    <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
+    <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
+    <p>{{lives}}</p>
+    <br>
+    <p>{{letterstatus}}</p>
+    <br>
+    {{/gamefinal}}
     <br><br><br><br>
     <form action="/logout" method="post">
       <button type="submit">Logout</button>

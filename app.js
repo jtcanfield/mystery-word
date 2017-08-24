@@ -123,7 +123,7 @@ app.post("/submitletter", function (req, res) {
   if (gameActive === false){res.render("index", {username : authedUser});return}
   if (gameActive === true){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
-    if (isLetter(lettersubmitted) === false){
+    if (isLetter(lettersubmitted) === false){//Input is not a letter
       res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"That is not a letter..."});
       return
     }
@@ -132,18 +132,26 @@ app.post("/submitletter", function (req, res) {
       return
     }
     req.sessionStore.guessed.push(lettersubmitted);
-    if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
+    if (req.sessionStore.word.indexOf(lettersubmitted) === -1){//Input is not correct
       req.sessionStore.lives -= 1;
-      if (req.sessionStore.lives === 0){
-        //YOU JUST LOSS
+      if (req.sessionStore.lives === 0){//Game Loss
+        req.sessionStore.emptyWord.map((x, index) =>{//Maps thru word to try and makes letters correct
+          if (x === "_"){
+            // req.sessionStore.emptyWord[index] = "wrong"+x;
+            req.sessionStore.emptyWord[index] = "<span style='color:red;'>"+req.sessionStore.word[index]+"</span>";
+            console.log(req.sessionStore);
+            res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
+            gameActive = false;
+          }
+        });
         return
       } else {
         res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Wrong!"});
       }
       return
     }
-    if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
-      req.sessionStore.word.map((x, index) =>{
+    if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){//Input is correct
+      req.sessionStore.word.map((x, index) =>{//Maps thru word to try and makes letters correct
         if (x === lettersubmitted){
           req.sessionStore.emptyWord[index] = lettersubmitted;
         }
