@@ -16,11 +16,15 @@
     <h1>statistics</h1>
     {{#username}}
     <p>Welcome, {{username}}</p>
+    <br>
+    <form action="/" method="post">
+      <button type="submit">Play!</button>
+    </form>
+    <br>
     <form action="/logout" method="post">
       <button type="submit">Logout</button>
     </form>
     {{/username}}
-    <h1>LOOK AT ALL THESE STATS!</h1>
     {{^username}}
     <br>
     <form action="/loginredirect" method="post">
@@ -31,6 +35,8 @@
       <button type="submit">Sign Up</button>
     </form>
     {{/username}}
+    
+    <h1>LOOK AT ALL THESE STATS!</h1>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>
