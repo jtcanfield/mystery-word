@@ -184,7 +184,7 @@ app.post("/submitletter", function (req, res) {
 
 app.post("/signup", function (req, res) {
   var validform = true;
-  if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined || req.body.email === undefined){
+  if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined){
     res.render('signup', {status:"One field is undefined, please try again using valid characters."});
     return
   }
@@ -221,7 +221,11 @@ app.post("/signup", function (req, res) {
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
+        if (req.body.email === null || req.body.email === undefined){
+          obj.users.push({username: req.body.username, password: req.body.password2, email: ""});
+        } else {
+          obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
+        }
         json = JSON.stringify(obj);
         fs.writeFile('data.json', json, 'utf8');
     }});

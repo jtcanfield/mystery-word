@@ -14,15 +14,16 @@
  	</head>
  	<body>
     <h1>Sign Up!</h1>
+    <p>Items marked with * are required</p>
     <form action="/signup" method="post">
-      <p>Username:</p>
+      <p>Username*:</p>
       <input type="text" name="username"required>
-      <p>Password:</p>
+      <p>Password*:</p>
       <input type="text" name="password1"required>
-      <p>Retype Password:</p>
+      <p>Retype Password*:</p>
       <input type="text" name="password2"required>
       <p>Valid Email:</p>
-      <input type="email" name="email"required>
+      <input type="email" name="email">
       <br><br>
       <button type="submit">Sign Up</button>
       <p class="error">{{status}}</p>
