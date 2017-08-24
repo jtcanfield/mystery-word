@@ -20,13 +20,15 @@ if (textFocus !== null){
 var timekeeper = document.getElementById('timekeeper');
 if (timekeeper){
   function timerBeginCount(){
-    var timeTaken = timekeeper.value();
+    var timeTaken = Number(timekeeper.value);
     x = setInterval(function() {
       timeTaken += 1000;
+      document.getElementById('timekeeper').value = timeTaken;
       var mins = Math.floor((timeTaken % (1000 * 60 * 60)) / (1000 * 60));
       var secs = Math.floor((timeTaken % (1000 * 60)) / 1000);
       finalTime = mins + "m " + secs + "s ";
       console.log(finalTime);
     }, 1000);
   };
+  timerBeginCount();
 }

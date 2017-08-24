@@ -34,7 +34,9 @@
     <br>
     <form action="/submitletter" method="post">
       <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required>
-      <input id="timekeeper" name="time" value="{{time}}">
+      <div id="timeholder">
+        <input id="timekeeper" name="timer" value="{{time}}">
+      </div>
       <button type="submit">Submit</button>
     </form>
     {{/game}}
