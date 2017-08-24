@@ -138,11 +138,18 @@ app.post("/submitletter", function (req, res) {
         req.sessionStore.emptyWord.map((x, index) =>{//Maps thru word to try and makes letters correct
           if (x === "_"){
             req.sessionStore.emptyWord[index] = "wrong"+req.sessionStore.word[index];
-            // req.sessionStore.emptyWord[index] = "<span style='color:red;'>"+req.sessionStore.word[index]+"</span>";
-            // console.log(req.sessionStore);
             gameActive = false;
           }
         });
+        fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
+          if (err){
+              console.log(err);
+          } else {
+            obj = JSON.parse(data);
+            obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email, wins: "", losses:"", avgwordlength:"", avgtime:""});
+            json = JSON.stringify(obj);
+            fs.writeFile('stats.json', json, 'utf8');
+        }});
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
         return
       } else {
