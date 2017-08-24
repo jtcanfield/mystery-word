@@ -25,7 +25,6 @@ var authedUser = "";
 var gameActive = false;
 var gameWin = false;
 var gameLoss = false;
-var timeTaken = 0;
 
 
 
