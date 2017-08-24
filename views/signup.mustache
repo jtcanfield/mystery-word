@@ -13,6 +13,10 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
+    <div id="topbarwrapper">
+      <form action="/loginredirect" method="post"><button type="submit">Already a user? Login</button></form>
+      <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
+    </div>
     <h1>Sign Up!</h1>
     <p>Items marked with * are required</p>
     <form action="/signup" method="post">
@@ -27,13 +31,6 @@
       <br><br>
       <button type="submit">Sign Up</button>
       <p class="error">{{status}}</p>
-    </form><br>
-    <form action="/loginredirect" method="post">
-      <button type="submit">Already a user? Login</button>
-    </form>
-    <br>
-    <form action="/statisticsredirect" method="post">
-      <button type="submit">Statistics</button>
     </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>

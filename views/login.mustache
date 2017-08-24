@@ -13,6 +13,10 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
+    <div id="topbarwrapper">
+      <form action="/signupredirect" method="post"><button type="submit">Sign Up</button></form>
+      <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
+    </div>
     <form action="/login" method="post">
       <p>Login Username:</p>
       <input type="text" name="username"required/>
@@ -20,13 +24,6 @@
       <input type="password" name="password"required/>
       <p class="error">{{status}}</p>
       <button type="submit">Login</button>
-    </form><br>
-    <form action="/signupredirect" method="post">
-      <button type="submit">Sign Up</button>
-    </form>
-    <br>
-    <form action="/statisticsredirect" method="post">
-      <button type="submit">Statistics</button>
     </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
