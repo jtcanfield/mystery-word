@@ -18,42 +18,35 @@
       <form action="/logout" method="post"><button type="submit">Logout</button></form>
       <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
     </div>
-    {{#pregame}}
-    <form action="/startgameeasy" method="post">
-      <button type="submit">Start Easy Game!</button>
-    </form>
-    <form action="/startgamemedium" method="post">
-      <button type="submit">Start Medium Game!</button>
-    </form>
-    <form action="/startgamehard" method="post">
-      <button type="submit">Start Hard Game!</button>
-    </form>
-    {{/pregame}}
-    {{#game}}
-    <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
-    <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
-    <p>Guesses Left:{{lives}}</p>
-    <br>
-    <p >{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
-    <br>
-    <form action="/submitletter" method="post">
-      <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required>
-      <div id="timeholder">
-        <input id="timekeeper" name="timer" value="{{time}}">
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-    {{/game}}
-    {{#gamefinal}}
-    <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
-    <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
-    <p>{{lives}}</p>
-    <br>
-    <p>{{letterstatus}}</p>
-    <br>
-    <form action="/" method="post"><button type="submit">Play Again!</button></form>
-    {{/gamefinal}}
-    <br>
+    <div id="body">
+      {{#pregame}}
+      <form action="/startgameeasy" method="post"><button type="submit">Start Easy Game!</button></form>
+      <form action="/startgamemedium" method="post"><button type="submit">Start Medium Game!</button></form>
+      <form action="/startgamehard" method="post"><button type="submit">Start Hard Game!</button></form>
+      {{/pregame}}
+      {{#game}}
+      <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
+      <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
+      <p>Guesses Left:{{lives}}</p>
+      <br>
+      <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
+      <br>
+      <form action="/submitletter" method="post">
+        <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required>
+        <div id="timeholder"><input id="timekeeper" name="timer" value="{{time}}"></div>
+        <button type="submit">Submit</button>
+      </form>
+      {{/game}}
+      {{#gamefinal}}
+      <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
+      <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
+      <p>{{lives}}</p>
+      <br>
+      <p>{{letterstatus}}</p>
+      <br>
+      <form action="/" method="post"><button type="submit">Play Again!</button></form>
+      {{/gamefinal}}
+    </div>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>
