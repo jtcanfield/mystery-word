@@ -113,13 +113,17 @@ app.post("/startgame:dynamic", function (req, res) {
   res.render("index", {emptyWord:req.sessionStore.emptyWord});
 });
 
+function isLetter(c) {
+  return c.toLowerCase() != c.toUpperCase();
+};
+
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
   if (gameActive === true){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
-    if (lettersubmitted !== NaN){
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"That is a number..."});
+    if (isLetter(lettersubmitted) === false){
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"That is not a letter..."});
       return
     }
     if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
