@@ -30,10 +30,11 @@
     <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
     <p>Guesses Left:{{lives}}</p>
     <br>
-    <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
+    <p >{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
     <br>
     <form action="/submitletter" method="post">
       <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required>
+      <input id="timekeeper" name="time" value="{{time}}">
       <button type="submit">Submit</button>
     </form>
     {{/game}}
