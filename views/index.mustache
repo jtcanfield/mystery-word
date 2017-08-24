@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
-    {{#username}}
+    {{#pregame}}
     <h1>Welcome, {{username}}!</h1>
     <form action="/startgameeasy" method="post">
       <button type="submit">Start Easy Game!</button>
@@ -24,8 +24,8 @@
     <form action="/startgamehard" method="post">
       <button type="submit">Start Hard Game!</button>
     </form>
-    {{/username}}
-    {{^username}}
+    {{/pregame}}
+    {{#game}}
     <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
     <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
     <p>Guesses Left:{{lives}}</p>
@@ -36,7 +36,7 @@
       <input type="text" name="lettersubmitted" maxlength="1" required>
       <button type="submit">Submit</button>
     </form>
-    {{/username}}
+    {{/game}}
     <br><br><br><br>
     <form action="/logout" method="post">
       <button type="submit">Logout</button>
