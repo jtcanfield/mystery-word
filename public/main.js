@@ -38,3 +38,7 @@ if (window.location.pathname === "/startgamehard" || window.location.pathname ==
   window.history.pushState("", "", '/');
 }
 //Statistics
+var fullstats = document.getElementById("fullstatistics");
+if (fullstats !== null){
+  console.log(fullstats.textContent);
+}
