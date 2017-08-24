@@ -21,7 +21,7 @@ html {
 }
 #topbarwrapper button, #topbarwrapper form{
   height: 70px;
-  display: inline-grid;
+  display: inline;
   float: right;
   width: 100px;
 }

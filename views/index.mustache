@@ -14,9 +14,9 @@
  	</head>
  	<body>
     <div id="topbarwrapper">
+      <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
       <p>Welcome, {{username}}</p>
       <form action="/logout" method="post"><button type="submit">Logout</button></form>
-      <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
     </div>
     <div id="body">
       {{#pregame}}
