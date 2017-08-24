@@ -18,15 +18,25 @@ html {
   width: 100%;
   height: 70px;
   background-color: rgb(170, 0, 190);
+  -webkit-box-shadow: 0px 0px 25px 0px rgba(171,0,190,1);
+  -moz-box-shadow: 0px 0px 25px 0px rgba(171,0,190,1);
+  box-shadow: 0px 0px 25px 0px rgba(171,0,190,1);
 }
-#topbarwrapper button, #topbarwrapper form{
+#topbarwrapper button{
+  cursor: pointer;
   height: 70px;
   display: inline;
   float: right;
   width: 100px;
-  background-color: rgb(0, 0, 220);
+  background-color: rgb(50, 0, 200);
   color: white;
   font-size: 17px;
+  transition-duration: 1s;
+  border: none;
+}
+#topbarwrapper button:hover{
+  background-color: rgb(0, 100, 255);
+  font-size: 15px;
 }
 #topbarwrapper p{
   margin: 5px;
@@ -39,4 +49,5 @@ html {
 #body{
   text-align: center;
   padding-top: 80px;
+  transform: translateY(50%);
 }
