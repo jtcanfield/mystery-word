@@ -40,8 +40,17 @@ if (window.location.pathname === "/startgamehard" || window.location.pathname ==
 //Statistics
 var fullstats = document.getElementById("fullstatistics");
 if (fullstats !== null){
+  // var parentobject = document.createElement("div");
+  // parentobject.setAttribute("id", "allstats");
   var jsonObject = JSON.parse(fullstats.textContent);
+  fullstats.innerHTML = "";
   jsonObject.map((user) => {
-    console.log(user);
+    var newliteral = document.createElement("div");
+    let holder = `
+      <h2>${user.username}</h2>
+      <p>Games: ${user.games}  Wins: ${user.wins}   Losses: ${user.losses}</p>
+    `;
+    newliteral.innerHTML = holder;
+    fullstats.appendChild(newliteral);
   })
 }

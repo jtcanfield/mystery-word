@@ -104,6 +104,7 @@ app.post("/startgame:dynamic", function (req, res) {
     default:
   }
   var wordindex = Math.floor(Math.random() * arrayOfPossibleWords.length);
+  //SPREAD OPERATOR:
   req.sessionStore.word = [...arrayOfPossibleWords[wordindex]];
   var emptyArray = [];
   req.sessionStore.word.map((x) =>{emptyArray.push("_")});
