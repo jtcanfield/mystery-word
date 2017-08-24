@@ -3,26 +3,33 @@ const bodyParser = require('body-parser');
 const statsDataFile = require('./stats.json');
 const fs = require('fs');
 
-function getStats(username){
-  return statsDataFile.users.find(function (user) {
-    return user.username.toLowerCase() == username.toLowerCase();
+function getStats(name){
+  var index = 0;
+  statsDataFile.users.map((x, idx) =>{
+    if (x.username.toLowerCase() === name.toLowerCase()){
+      index = idx;
+      return
+    }
   });
+  return index
 }
 
-function changestats(name, win, loss, wordlength){
+function changestats(name, win, loss, word, wordlength, time){
     fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        console.log(name);
-        var userdata = getStats(name);
+        var userdata = obj.users[getStats(name)];
         console.log(userdata);
         userdata.games += 1;
         userdata.wins += win;
         userdata.losses += loss;
+        userdata.words.push(word);
         userdata.wordlengths.push(wordlength);
         userdata.avgwordlength = (userdata.wordlengths.reduce((a,b) => a+b, 0))/userdata.wordlengths.length;
+        userdata.times.push(time);
+        userdata.avgtime = (userdata.times.reduce((a,b) => a+b, 0))/userdata.times.length;
         json = JSON.stringify(obj);
         fs.writeFile('stats.json', json, 'utf8');
     }});

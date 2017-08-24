@@ -129,7 +129,6 @@ function isLetter(c) {
   return c.toLowerCase() != c.toUpperCase();
 };
 
-
 app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
@@ -154,7 +153,7 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
-        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word.length, finalTime)
+        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
         clearInterval(x);
         return
@@ -176,7 +175,9 @@ app.post("/submitletter", function (req, res) {
         }
       });
       if (gameWin === true){//GAME WIN HERE, EDIT INFO, MAKE IT LOOK BETTER
-        res.render("index", {username:authedUser});
+        statsFile.changestats(authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
+        res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Good Game!"});
+        clearInterval(x);
         return
       } else {
         res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Nice!"});
