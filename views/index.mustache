@@ -14,11 +14,9 @@
  	</head>
  	<body>
     <div id="topbarwrapper">
-      {{#username}}
       <p>Welcome, {{username}}</p>
       <form action="/logout" method="post"><button type="submit">Logout</button></form>
       <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
-      {{/username}}
     </div>
     {{#pregame}}
     <form action="/startgameeasy" method="post">
@@ -53,6 +51,7 @@
     <br>
     <p>{{letterstatus}}</p>
     <br>
+    <form action="/" method="post"><button type="submit">Play Again!</button></form>
     {{/gamefinal}}
     <br>
  	  <script type="text/javascript" src="main.js"></script>

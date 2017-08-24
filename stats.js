@@ -3,16 +3,17 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const statsDataFile = require('./stats.json');
 
-// function getspecificstats(name){
-//   var index = 0;
-//   statsDataFile.users.map((x, idx) =>{
-//     if (x.username.toLowerCase() === name.toLowerCase()){
-//       index = x;
-//       return
-//     }
-//   });
-//   return index
-// }
+function getStats(name){
+  var index = 0;
+  statsDataFile.users.map((x, idx) =>{
+    if (x.username.toLowerCase() === name.toLowerCase()){
+      index = idx;
+      return
+    }
+  });
+  return index
+}
+
 var getspecificstats = function (name, callback){
   fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
     if (err){
