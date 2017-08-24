@@ -137,13 +137,13 @@ app.post("/submitletter", function (req, res) {
       if (req.sessionStore.lives === 0){//Game Loss
         req.sessionStore.emptyWord.map((x, index) =>{//Maps thru word to try and makes letters correct
           if (x === "_"){
-            // req.sessionStore.emptyWord[index] = "wrong"+x;
-            req.sessionStore.emptyWord[index] = "<span style='color:red;'>"+req.sessionStore.word[index]+"</span>";
-            console.log(req.sessionStore);
-            res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
+            req.sessionStore.emptyWord[index] = "wrong"+req.sessionStore.word[index];
+            // req.sessionStore.emptyWord[index] = "<span style='color:red;'>"+req.sessionStore.word[index]+"</span>";
+            // console.log(req.sessionStore);
             gameActive = false;
           }
         });
+        res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
         return
       } else {
         res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Wrong!"});
