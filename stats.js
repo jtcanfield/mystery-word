@@ -3,14 +3,18 @@ const bodyParser = require('body-parser');
 const statsDataFile = require('./stats.json');
 const fs = require('fs');
 
-function changestats(username, win, loss, wordlength){
+function changestats(name, win, loss, wordlength){
     fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        obj.users.username.wins += win;
-        obj.users.username.losses += loss;
+        var userdata = obj.users.name;
+        userdata.games += 1;
+        userdata.wins += win;
+        userdata.losses += loss;
+        userdata.wordlengths.push(wordlength);
+        userdata.avgwordlength = (userdata.wordlengths.reduce((a,b) => a+b, 0))/userdata.wordlengths.length;
         json = JSON.stringify(obj);
         fs.writeFile('stats.json', json, 'utf8');
     }});
@@ -18,5 +22,5 @@ function changestats(username, win, loss, wordlength){
 }
 
 module.exports = {
-  changestats: changestats,
+  changestats: changestats
 }
