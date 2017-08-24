@@ -22,7 +22,7 @@ function getUser(username){
 }
 var authedUser = "";
 var gameActive = false;
-var gameFinish = false;
+var gameWin = false;
 
 
 
@@ -124,7 +124,12 @@ app.post("/submitletter", function (req, res) {
     }
     req.sessionStore.guessed.push(lettersubmitted);
     if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Wrong!"});
+      req.sessionStore.lives -= 1;
+      if (req.sessionStore.lives === 0){
+        //YOU JUST LOSS
+      } else {
+        res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Wrong!"});  
+      }
       return
     }
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
@@ -133,13 +138,13 @@ app.post("/submitletter", function (req, res) {
           req.sessionStore.emptyWord[index] = lettersubmitted;
         }
       });
-      gameFinish = true;
+      gameWin = true;
       req.sessionStore.emptyWord.map((x) =>{
         if (x === "_"){
-          gameFinish = false;
+          gameWin = false;
         }
       });
-      if (gameFinish === true){
+      if (gameWin === true){//GAME WIN HERE, EDIT INFO, MAKE IT LOOK BETTER
         res.render("index", {username:authedUser});
         return
       } else {
@@ -150,7 +155,6 @@ app.post("/submitletter", function (req, res) {
       console.log(req.sessionStore);
     }
   }
-  // res.render("index", {username : authedUser});
 });
 
 app.post("/signup", function (req, res) {
