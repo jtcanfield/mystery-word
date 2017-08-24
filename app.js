@@ -48,6 +48,9 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/statistics", function (req, res) {
+  statsFile.pullStats(function(){
+
+  });
   if (req.sessionStore.authedUser === undefined){
     res.render("statistics");
     return

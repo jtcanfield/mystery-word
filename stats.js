@@ -35,6 +35,10 @@ function changestats(name, win, loss, word, wordlength, time){
   return
 }
 
+var pullStats = function (callback){
+  
+}
+
 module.exports = {
   getspecificstats:getspecificstats,
   changestats: changestats
