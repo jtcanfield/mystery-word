@@ -49,7 +49,6 @@ app.get("/signup", function (req, res) {
 
 app.get("/statistics", function (req, res) {
   statsFile.pullStats(function(x){
-    console.log(x)
     if (req.sessionStore.authedUser === undefined){
       res.render("statistics", {stats:x});
       return
