@@ -157,9 +157,9 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
-        clearInterval(x);
-        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word.length)
+        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word.length, finalTime)
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
+        clearInterval(x);
         return
       } else {
         res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Wrong!"});
