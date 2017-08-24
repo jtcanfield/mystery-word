@@ -25,6 +25,12 @@ html {
   float: right;
   width: 100px;
 }
+#topbarwrapper p{
+  top: 50%;
+  transform: translateY(50%);
+  display: inline;
+  float: left;
+}
 #body{
   text-align: center;
   padding-top: 80px;
