@@ -4,6 +4,7 @@ const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const app = express();
 const userDataFile = require('./data.json');
+const statsFile = require('./stats.js');
 const session = require('express-session');
 const fs = require('fs');
 const wordFile = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
@@ -141,15 +142,7 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
-        fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
-          if (err){
-              console.log(err);
-          } else {
-            obj = JSON.parse(data);
-            obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email, wins: "", losses:"", avgwordlength:"", avgtime:""});
-            json = JSON.stringify(obj);
-            fs.writeFile('stats.json', json, 'utf8');
-        }});
+        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word.length)
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
         return
       } else {
