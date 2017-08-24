@@ -41,5 +41,7 @@ if (window.location.pathname === "/startgamehard" || window.location.pathname ==
 var fullstats = document.getElementById("fullstatistics");
 if (fullstats !== null){
   var jsonObject = JSON.parse(fullstats.textContent);
-  console.log(jsonObject);
+  jsonObject.map((user) => {
+    console.log(user);
+  })
 }
