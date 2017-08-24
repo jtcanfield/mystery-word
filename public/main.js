@@ -68,7 +68,16 @@ if (profilepage !== null){
       <span>Games: ${jsonObject.games}</span><span>Wins: ${jsonObject.wins}</span><span>Losses: ${jsonObject.losses}</span>
     </div>
     <p>Avg Word Length: ${jsonObject.avgwordlength}</p>
+    <h3>Game History:</h3>
   `;
   newliteral.innerHTML = holder;
+  for (let i = 0; i < jsonObject.words.length; i++){
+    let historyholder = `
+      <div>
+        <span>${jsonObject.gamestatus[i]}</span><span>Word: ${jsonObject.words[i]}</span><span>Time Taken: ${jsonObject.times[i]}</span>
+      </div>
+    `;
+    newliteral.innerHTML += historyholder;
+  }
   profilepage.appendChild(newliteral);
 }
