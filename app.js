@@ -34,7 +34,6 @@ function timerBeginCount(){
 
 app.get("/", function (req, res) {
   if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
-  console.log(req.sessionStore.authedUser);
   res.render("index", {pregame:"active",username : req.sessionStore.authedUser});
 });
 
