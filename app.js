@@ -16,7 +16,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text());
-var authedUser = "";
 var gameActive = false;
 var gameWin = false;
 var gameLoss = false;
@@ -34,27 +33,28 @@ function timerBeginCount(){
 };
 
 app.get("/", function (req, res) {
-  if (authedUser === ""){res.redirect('/login');return}
-  res.render("index", {pregame:"active",username : authedUser});
+  if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
+  console.log(req.sessionStore.authedUser);
+  res.render("index", {pregame:"active",username : req.sessionStore.authedUser});
 });
 
 app.get("/login", function (req, res) {
-  authedUser = "";
+  req.sessionStore.authedUser = undefined;
   res.render("login");
 });
 
 app.get("/signup", function (req, res) {
-  authedUser = "";
+  req.sessionStore.authedUser = undefined;
   res.render("signup");
 });
 
 app.get("/statistics", function (req, res) {
-  if (authedUser === ""){
+  if (req.sessionStore.authedUser === undefined){
     res.render("statistics");
     return
   }
-  if (authedUser !== ""){
-    res.render("statistics", {username:authedUser});
+  if (req.sessionStore.authedUser !== undefined){
+    res.render("statistics", {username:req.sessionStore.authedUser});
     return
   }
 });
@@ -66,7 +66,7 @@ app.post("/", function (req, res) {
 app.post("/login", function (req, res) {
   userFile.checkLogin(req.body.username, req.body.password, function(x){
     if (x){
-      authedUser = req.body.username;
+      req.sessionStore.authedUser = req.body.username;
       res.redirect("/");
     } else {
       res.render("login", {status:"Incorrect User Id or Password"});
@@ -76,7 +76,7 @@ app.post("/login", function (req, res) {
 
 
 app.post("/startgame:dynamic", function (req, res) {
-  if (authedUser === ""){res.redirect('/login');return}
+  if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
   var arrayOfPossibleWords = [];
   switch (req.params.dynamic) {
     case "easy":
@@ -116,8 +116,8 @@ app.post("/startgame:dynamic", function (req, res) {
 });
 
 app.post("/submitletter", function (req, res) {
-  if (authedUser === ""){res.redirect('/login');return}
-  if (gameActive === false){res.render("index", {username : authedUser});return}
+  if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
+  if (gameActive === false){res.render("index", {username : req.sessionStore.authedUser});return}
   if (gameActive === true){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (isLetter(lettersubmitted) === false){//Input is not a letter
@@ -138,7 +138,7 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
-        statsFile.changestats(authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
+        statsFile.changestats(req.sessionStore.authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
         clearInterval(x);
         return
@@ -160,7 +160,7 @@ app.post("/submitletter", function (req, res) {
         }
       });
       if (gameWin === true){//GAME WIN HERE, EDIT INFO, MAKE IT LOOK BETTER
-        statsFile.changestats(authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
+        statsFile.changestats(req.sessionStore.authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Good Game!"});
         clearInterval(x);
         return
@@ -205,18 +205,17 @@ app.post("/signup", function (req, res) {
     res.redirect('/');
     return
   })
-  console.log("THIS SHOULD NOT BE FIRED, CHECK SIGNUP PAGE");
 });
 app.post("/logout", function (req, res) {
-  authedUser = "";
+  req.sessionStore.authedUser = undefined;
   res.redirect('/login');
 });
 app.post("/loginredirect", function (req, res) {
-  authedUser = "";
+  req.sessionStore.authedUser = undefined;
   res.redirect('/login');
 });
 app.post("/signupredirect", function (req, res) {
-  authedUser = "";
+  req.sessionStore.authedUser = undefined;
   res.redirect('/signup');
 });
 app.post("/statisticsredirect", function (req, res) {
