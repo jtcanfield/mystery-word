@@ -3,15 +3,30 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const statsDataFile = require('./stats.json');
 
-function getspecificstats(name){
-  var index = 0;
-  statsDataFile.users.map((x, idx) =>{
-    if (x.username.toLowerCase() === name.toLowerCase()){
-      index = idx;
-      return
+// function getspecificstats(name){
+//   var index = 0;
+//   statsDataFile.users.map((x, idx) =>{
+//     if (x.username.toLowerCase() === name.toLowerCase()){
+//       index = x;
+//       return
+//     }
+//   });
+//   return index
+// }
+var getspecificstats = function (name, callback){
+  fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      obj.users.map((x, idx) =>{
+        if (x.username.toLowerCase() === name.toLowerCase()){
+          callback(JSON.stringify(obj.users[idx]));
+          return
+        }
+      });
     }
   });
-  return index
 }
 
 function changestats(name, win, loss, word, wordlength, time){

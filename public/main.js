@@ -37,7 +37,7 @@ if (timekeeper){
 if (window.location.pathname === "/startgamehard" || window.location.pathname === "/startgamemedium" ||  window.location.pathname === "/startgameeasy" ||  window.location.pathname === "/submitletter"){
   window.history.pushState("", "", '/');
 }
-//Statistics
+//Statistics Page
 var fullstats = document.getElementById("fullstatistics");
 if (fullstats !== null){
   var jsonObject = JSON.parse(fullstats.textContent);
@@ -53,4 +53,19 @@ if (fullstats !== null){
     newliteral.innerHTML = holder;
     fullstats.appendChild(newliteral);
   })
+}
+//Profile Page
+var profilepage = document.getElementById("profilepageinfo");
+if (profilepage !== null){
+  var jsonObject = JSON.parse(profilepage.textContent);
+  profilepage.innerHTML = "";
+  var newliteral = document.createElement("div");
+  newliteral.setAttribute("class", "playerstats");
+  let holder = `
+    <h1>${jsonObject.username}</h1>
+    <p>Games: ${jsonObject.games}  Wins: ${jsonObject.wins} Losses: ${jsonObject.losses}</p>
+    <p>Avg Word Length: ${jsonObject.avgwordlength}</p>
+  `;
+  newliteral.innerHTML = holder;
+  profilepage.appendChild(newliteral);
 }

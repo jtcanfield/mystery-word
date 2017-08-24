@@ -224,6 +224,18 @@ app.post("/signupredirect", function (req, res) {
 app.post("/statisticsredirect", function (req, res) {
   res.redirect('/statistics');
 });
+app.get("/profile:dynamic", function (req, res) {
+  statsFile.getspecificstats(req.params.dynamic, function(x){
+    if (req.sessionStore.authedUser === undefined){
+      res.render("profile", {stats:x});
+      return
+    }
+    if (req.sessionStore.authedUser !== undefined){
+      res.render("profile", {stats:x, username:req.sessionStore.authedUser});
+      return
+    }
+  });
+});
 app.get("/:dynamic", function (req, res) {
   console.log("DYNAMIC TRIGGERED:")
   console.log(req.params.dynamic);
