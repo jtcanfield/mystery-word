@@ -107,6 +107,7 @@ app.post("/startgame:dynamic", function (req, res) {
   req.sessionStore.word.map((x) =>{emptyArray.push("_")});
   req.sessionStore.emptyWord = emptyArray;
   req.sessionStore.guessed = [];
+  req.sessionStore.lives = 8;
   gameActive = true;
   console.log(req.sessionStore);
   res.render("index", {emptyWord:req.sessionStore.emptyWord});
@@ -118,12 +119,12 @@ app.post("/submitletter", function (req, res) {
   if (gameActive === true && gameFinish === false){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"You Already Guessed That Letter!"});
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"You Already Guessed That Letter!"});
       return
     }
     req.sessionStore.guessed.push(lettersubmitted);
     if (req.sessionStore.word.indexOf(lettersubmitted) === -1){
-      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Wrong!"});
+      res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Wrong!"});
       return
     }
     if (req.sessionStore.word.indexOf(lettersubmitted) !== -1){
@@ -142,7 +143,7 @@ app.post("/submitletter", function (req, res) {
         res.render("index", {username:authedUser});
         return
       } else {
-        res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, letterstatus:"Nice!"});
+        res.render("index", {emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Nice!"});
       }
     } else {
       console.log("GAME BROKE!");
