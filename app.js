@@ -25,6 +25,16 @@ var authedUser = "";
 var gameActive = false;
 var gameWin = false;
 var gameLoss = false;
+var timeTaken = 0;
+function timerBeginCount(){
+  x = setInterval(function() {
+    timeTaken += 1000;
+    var mins = Math.floor((timeTaken % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((timeTaken % (1000 * 60)) / 1000);
+    finalTime = mins + "m " + secs + "s ";
+    console.log(finalTime);
+  }, 1000);
+};
 
 
 
@@ -111,6 +121,7 @@ app.post("/startgame:dynamic", function (req, res) {
   req.sessionStore.guessed = [];
   req.sessionStore.lives = 8;
   gameActive = true;
+  timerBeginCount();
   console.log(req.sessionStore);
   res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, letterstatus:"Go!"});
 });
@@ -142,6 +153,7 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
+        clearInterval(x);
         statsFile.changestats(authedUser, 0, 1, req.sessionStore.word.length)
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", letterstatus:"Wrong!"});
         return

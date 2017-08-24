@@ -3,13 +3,21 @@ const bodyParser = require('body-parser');
 const statsDataFile = require('./stats.json');
 const fs = require('fs');
 
+function getStats(username){
+  return statsDataFile.users.find(function (user) {
+    return user.username.toLowerCase() == username.toLowerCase();
+  });
+}
+
 function changestats(name, win, loss, wordlength){
     fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        var userdata = obj.users.name;
+        console.log(name);
+        var userdata = getStats(name);
+        console.log(userdata);
         userdata.games += 1;
         userdata.wins += win;
         userdata.losses += loss;
