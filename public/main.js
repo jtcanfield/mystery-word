@@ -40,15 +40,15 @@ if (window.location.pathname === "/startgamehard" || window.location.pathname ==
 //Statistics
 var fullstats = document.getElementById("fullstatistics");
 if (fullstats !== null){
-  // var parentobject = document.createElement("div");
-  // parentobject.setAttribute("id", "allstats");
   var jsonObject = JSON.parse(fullstats.textContent);
   fullstats.innerHTML = "";
   jsonObject.map((user) => {
     var newliteral = document.createElement("div");
+    newliteral.setAttribute("class", "playerstats");
     let holder = `
-      <h2>${user.username}</h2>
-      <p>Games: ${user.games}  Wins: ${user.wins}   Losses: ${user.losses}</p>
+      <h2><a href="/profile${user.username}">${user.username}</a></h2>
+      <p>Games: ${user.games}  Wins: ${user.wins} Losses: ${user.losses}</p>
+      <p>Avg Word Length: ${user.avgwordlength}</p>
     `;
     newliteral.innerHTML = holder;
     fullstats.appendChild(newliteral);
