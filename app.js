@@ -23,6 +23,7 @@ function getUser(username){
 var authedUser = "";
 var gameActive = false;
 var gameWin = false;
+var gameLoss = false;
 
 
 
@@ -205,7 +206,7 @@ app.post("/signup", function (req, res) {
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email, currentword: ""});
+        obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email, wins: "", losses:"", avgwordlength:"", avgtime:""});
         json = JSON.stringify(obj);
         fs.writeFile('data.json', json, 'utf8');
     }});
