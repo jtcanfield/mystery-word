@@ -140,7 +140,7 @@ app.post("/submitletter", function (req, res) {
             gameActive = false;
           }
         });
-        statsFile.changestats(req.sessionStore.authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
+        statsFile.changestats(req.sessionStore.authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken, "Loss");
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
         clearInterval(x);
         return
@@ -162,7 +162,7 @@ app.post("/submitletter", function (req, res) {
         }
       });
       if (gameWin === true){//GAME WIN HERE, EDIT INFO, MAKE IT LOOK BETTER
-        statsFile.changestats(req.sessionStore.authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken);
+        statsFile.changestats(req.sessionStore.authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken, "Win");
         res.render("index", {gamefinal:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Good Game!"});
         clearInterval(x);
         return

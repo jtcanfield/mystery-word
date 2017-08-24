@@ -29,7 +29,7 @@ var getspecificstats = function (name, callback){
   });
 }
 
-function changestats(name, win, loss, word, wordlength, time){
+function changestats(name, win, loss, word, wordlength, time, gamestatus){
     fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
       if (err){
           console.log(err);
@@ -44,6 +44,7 @@ function changestats(name, win, loss, word, wordlength, time){
         userdata.avgwordlength = (userdata.wordlengths.reduce((a,b) => a+b, 0))/userdata.wordlengths.length;
         userdata.times.push(time);
         userdata.avgtime = (userdata.times.reduce((a,b) => a+b, 0))/userdata.times.length;
+        userdata.gamestatus.push(gamestatus);
         json = JSON.stringify(obj);
         fs.writeFile('stats.json', json, 'utf8');
     }});
@@ -55,7 +56,7 @@ function addstatuser(name){
         console.log(err);
     } else {
       obj = JSON.parse(data);
-      obj.users.push({username:name,games:"0",wins:"0",losses:"0",words:[],wordlengths:[],avgwordlength:"0",times:[],avgtime:"0"});
+      obj.users.push({username:name,games:"0",wins:"0",losses:"0",words:[],wordlengths:[],avgwordlength:"0",times:[],avgtime:"0",gamestatus:[]});
       json = JSON.stringify(obj);
       fs.writeFile('stats.json', json, 'utf8');
     }
