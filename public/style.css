@@ -16,20 +16,25 @@ html {
   top: 0;
   left: 0;
   width: 100%;
-  border: 2px solid red;
   height: 70px;
+  background-color: rgb(170, 0, 190);
 }
 #topbarwrapper button, #topbarwrapper form{
   height: 70px;
   display: inline;
   float: right;
   width: 100px;
+  background-color: rgb(0, 0, 220);
+  color: white;
+  font-size: 17px;
 }
 #topbarwrapper p{
-  top: 50%;
+  margin: 5px;
   transform: translateY(50%);
   display: inline;
   float: left;
+  color: white;
+  font-size: 25px;
 }
 #body{
   text-align: center;
