@@ -21,9 +21,11 @@
     </div>
     <div id="body">
       {{#pregame}}
-      <form action="/startgameeasy" method="post"><button type="submit">Start Easy Game!</button></form>
-      <form action="/startgamemedium" method="post"><button type="submit">Start Medium Game!</button></form>
-      <form action="/startgamehard" method="post"><button type="submit">Start Hard Game!</button></form>
+      <div id="pregame">
+        <form action="/startgameeasy" method="post"><button type="submit">Start Easy Game!</button></form>
+        <form action="/startgamemedium" method="post"><button type="submit">Start Medium Game!</button></form>
+        <form action="/startgamehard" method="post"><button type="submit">Start Hard Game!</button></form>
+      </div>
       {{/pregame}}
       {{#game}}
       <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
