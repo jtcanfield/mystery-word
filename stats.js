@@ -1,9 +1,9 @@
 const path = require('path');
 const bodyParser = require('body-parser');
-const statsDataFile = require('./stats.json');
 const fs = require('fs');
+const statsDataFile = require('./stats.json');
 
-function getStats(name){
+function getspecificstats(name){
   var index = 0;
   statsDataFile.users.map((x, idx) =>{
     if (x.username.toLowerCase() === name.toLowerCase()){
@@ -36,5 +36,6 @@ function changestats(name, win, loss, word, wordlength, time){
 }
 
 module.exports = {
+  getspecificstats:getspecificstats,
   changestats: changestats
 }
