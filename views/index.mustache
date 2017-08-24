@@ -13,8 +13,14 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
  	</head>
  	<body>
+    <div id="topbarwrapper">
+      {{#username}}
+      <p>Welcome, {{username}}</p>
+      <form action="/logout" method="post"><button type="submit">Logout</button></form>
+      <form action="/statisticsredirect" method="post"><button type="submit">Statistics</button></form>
+      {{/username}}
+    </div>
     {{#pregame}}
-    <h1>Welcome, {{username}}!</h1>
     <form action="/startgameeasy" method="post">
       <button type="submit">Start Easy Game!</button>
     </form>
@@ -48,14 +54,7 @@
     <p>{{letterstatus}}</p>
     <br>
     {{/gamefinal}}
-    <br><br><br><br>
-    <form action="/logout" method="post">
-      <button type="submit">Logout</button>
-    </form>
     <br>
-    <form action="/statisticsredirect" method="post">
-      <button type="submit">Statistics</button>
-    </form>
  	  <script type="text/javascript" src="main.js"></script>
  	</body>
  </html>
