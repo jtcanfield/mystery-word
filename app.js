@@ -119,7 +119,6 @@ app.post("/submitletter", function (req, res) {
   if (authedUser === ""){res.redirect('/login');return}
   if (gameActive === false){res.render("index", {username : authedUser});return}
   if (gameActive === true){
-    console.log(req.body)
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (isLetter(lettersubmitted) === false){//Input is not a letter
       res.render("./index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"That is not a letter..."});
@@ -202,25 +201,11 @@ app.post("/signup", function (req, res) {
     return
   }
   userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
-
+    authedUser = req.body.username;
+    res.redirect('/');
+    return
   })
-  // if (signupverification === 0){
-  //   fs.readFile('data.json', 'utf8', function readFileCallback(err, data){
-  //     if (err){
-  //         console.log(err);
-  //     } else {
-  //       obj = JSON.parse(data);
-  //       if (req.body.email === null || req.body.email === undefined){
-  //         obj.users.push({username: req.body.username, password: req.body.password2, email: ""});
-  //       } else {
-  //         obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
-  //       }
-  //       json = JSON.stringify(obj);
-  //       fs.writeFile('data.json', json, 'utf8');
-  //   }});
-  // }
-  authedUser = req.body.username;
-  res.redirect('/');
+  console.log("THIS SHOULD NOT BE FIRED, CHECK SIGNUP PAGE");
 });
 app.post("/logout", function (req, res) {
   authedUser = "";
