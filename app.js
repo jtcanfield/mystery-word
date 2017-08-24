@@ -49,16 +49,15 @@ app.get("/signup", function (req, res) {
 
 app.get("/statistics", function (req, res) {
   statsFile.pullStats(function(x){
-    console.log(x);
+    if (req.sessionStore.authedUser === undefined){
+      res.render("statistics", {stats:x, });
+      return
+    }
+    if (req.sessionStore.authedUser !== undefined){
+      res.render("statistics", {stats:x, username:req.sessionStore.authedUser});
+      return
+    }
   });
-  if (req.sessionStore.authedUser === undefined){
-    res.render("statistics");
-    return
-  }
-  if (req.sessionStore.authedUser !== undefined){
-    res.render("statistics", {username:req.sessionStore.authedUser});
-    return
-  }
 });
 
 app.post("/", function (req, res) {
@@ -204,7 +203,7 @@ app.post("/signup", function (req, res) {
   }
   userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
     statsFile.addstatuser(req.body.username);
-    authedUser = req.body.username;
+    req.sessionStore.authedUser = req.body.username;
     res.redirect('/');
     return
   })
