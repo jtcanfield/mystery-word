@@ -48,8 +48,8 @@ app.get("/signup", function (req, res) {
 });
 
 app.get("/statistics", function (req, res) {
-  statsFile.pullStats(function(){
-
+  statsFile.pullStats(function(x){
+    console.log(x);
   });
   if (req.sessionStore.authedUser === undefined){
     res.render("statistics");
@@ -203,6 +203,7 @@ app.post("/signup", function (req, res) {
     return
   }
   userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
+    statsFile.addstatuser(req.body.username);
     authedUser = req.body.username;
     res.redirect('/');
     return

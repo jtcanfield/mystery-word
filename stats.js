@@ -32,14 +32,42 @@ function changestats(name, win, loss, word, wordlength, time){
         json = JSON.stringify(obj);
         fs.writeFile('stats.json', json, 'utf8');
     }});
-  return
+}
+
+function addstatuser(name){
+  fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      obj.users.push({username:name,games:"0",wins:"0",losses:"0",words:[],wordlengths:[],avgwordlength:"0",times:[],avgtime:"0"});
+      json = JSON.stringify(obj);
+      fs.writeFile('stats.json', json, 'utf8');
+    }
+  });
 }
 
 var pullStats = function (callback){
-  
+  fs.readFile('stats.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      callback(obj.users);
+      // userdata.games = Number(userdata.games)+ 1;
+      // userdata.wins = Number(userdata.wins)+Number(win);
+      // userdata.losses = Number(userdata.losses)+Number(loss);
+      // userdata.words.push(word.join(""));
+      // userdata.wordlengths.push(wordlength);
+      // userdata.avgwordlength = (userdata.wordlengths.reduce((a,b) => a+b, 0))/userdata.wordlengths.length;
+      // userdata.times.push(time);
+      // userdata.avgtime = (userdata.times.reduce((a,b) => a+b, 0))/userdata.times.length;
+  }});
 }
 
 module.exports = {
   getspecificstats:getspecificstats,
-  changestats: changestats
+  changestats: changestats,
+  addstatuser: addstatuser,
+  pullStats:pullStats
 }
