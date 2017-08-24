@@ -221,7 +221,7 @@ app.post("/signup", function (req, res) {
           console.log(err);
       } else {
         obj = JSON.parse(data);
-        obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email, wins: "", losses:"", avgwordlength:"", avgtime:""});
+        obj.users.push({username: req.body.username, password: req.body.password2, email: req.body.email});
         json = JSON.stringify(obj);
         fs.writeFile('data.json', json, 'utf8');
     }});
