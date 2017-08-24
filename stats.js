@@ -52,8 +52,7 @@ var pullStats = function (callback){
     if (err){
         console.log(err);
     } else {
-      obj = JSON.parse(data);
-      callback(obj.users);
+      callback(data);
     }
   });
 }

@@ -37,3 +37,4 @@ if (timekeeper){
 if (window.location.pathname === "/startgamehard" || window.location.pathname === "/startgamemedium" ||  window.location.pathname === "/startgameeasy" ||  window.location.pathname === "/submitletter"){
   window.history.pushState("", "", '/');
 }
+//Statistics
