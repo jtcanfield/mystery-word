@@ -74,6 +74,9 @@ html {
   height: 100px;
   font-size: 30px;
 }
+#pregame p{
+  font-size: 20px;
+}
 #pregame form{
   display: inline;
 }

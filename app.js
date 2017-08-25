@@ -123,7 +123,7 @@ app.post("/startgame:dynamic", function (req, res) {
   // var encodedstring = encodeURIComponent('{game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"}');
   // console.log(decodeURIComponent(encodedstring));
   // res.redirect("/mysteryword" + encodedstring);
-  res.render("mysteryword", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"});
+  res.render("mysteryword", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"});
 });
 
 app.post("/submitletter", function (req, res) {
