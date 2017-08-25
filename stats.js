@@ -70,8 +70,8 @@ var pullStats = function (callback){
         console.log(err);
     } else {
       obj = JSON.parse(data);
-      callback(obj.users);
-      // callback(JSON.stringify(obj.users));
+      // callback(obj.users);
+      callback(JSON.stringify(obj.users));
     }
   });
 }
