@@ -54,7 +54,18 @@ html {
 #loginbody{
   text-align: center;
   padding-top: 80px;
-  transform: translateY(50%);
+  transform: translateY(25%);
+  font-size: 30px;
+}
+#loginbody input[type=text], #loginbody input[type=password]{
+  text-align: center;
+  font-size: 30px;
+  border-radius: 100px;
+}
+#loginbody input[type=text], #loginbody input[type=password]{
+  text-align: center;
+  font-size: 30px;
+  border-radius: 100px;
 }
 #pregame{
   text-align: center;
