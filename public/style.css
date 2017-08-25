@@ -85,13 +85,14 @@ html {
 }
 #mysterywordbody input{
   font-size: 40px;
-  width: 40px;
-  display: block;
-  margin: auto;
+  text-align: center;
+  width: 45px;
+  height: 45px;
 }
 #mysterywordbody button{
-  display: block;
-  margin: auto;
+  transform: translateY(-25%);
+  height: 50px;
+  margin: 0;
 }
 #mysterywordbody h2{
   font-size: 70px;
