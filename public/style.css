@@ -102,13 +102,23 @@ html {
 #mysterywordbody button{
   display: block;
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   height: 50px;
   font-size: 40px;
   width: 150px;
+  background-color: rgb(240, 220, 255);
+  -webkit-box-shadow: 0px 0px 0px 10px rgba(240,220,255,1);
+  -moz-box-shadow: 0px 0px 0px 10px rgba(240,220,255,1);
+  box-shadow: 0px 0px 0px 10px rgba(240,220,255,1);
+  transition: all 0.5s;
+}
+#mysterywordbody button:hover{
+  -webkit-box-shadow: 0px 0px 17px 10px rgba(240,220,255,1);
+  -moz-box-shadow: 0px 0px 17px 10px rgba(240,220,255,1);
+  box-shadow: 0px 0px 17px 10px rgba(240,220,255,1);
 }
 #letterstatus{
-  animation: fadeout 5s ease-in 1;
+  animation: fadeout 7s ease-in 1;
   opacity: 0;
 }
 #mysterywordbody h2{
