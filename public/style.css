@@ -85,6 +85,13 @@ html {
 }
 #mysterywordbody input{
   font-size: 40px;
+  width: 40px;
+  display: block;
+  margin: auto;
+}
+#mysterywordbody button{
+  display: block;
+  margin: auto;
 }
 #mysterywordbody h2{
   font-size: 70px;
