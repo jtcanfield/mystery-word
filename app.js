@@ -188,37 +188,19 @@ app.post("/submitletter", function (req, res) {
 });
 
 app.post("/signup", function (req, res) {
-  var validform = true;
-  userFile.checkExistingUsers(req.body.username.toLowerCase(), req.body.email.toLowerCase(), function(error, errordescrip){
+  userFile.checkExistingUsers(req, function(error, errordescrip){
     if (error === true){
-      validform = false;
       res.render('signup', {status:errordescrip});
       return
+    } else if (error !== true){
+      userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
+        statsFile.addstatuser(req.body.username);
+        req.sessionStore.authedUser = req.body.username;
+        res.redirect('/');
+        return
+      })
     }
   });
-  if (validform === false){return}
-  if (req.body.username === undefined || req.body.password1 === undefined || req.body.password2 === undefined){
-    res.render('signup', {status:"One field is undefined, please try again using valid characters."});
-    return
-  }
-  if (req.body.password1.length < 4){
-    res.render('signup', {status:"Password must have at least 4 characters"});
-    return
-  }
-  if (req.body.password1 !== req.body.password2){
-    res.render('signup', {status:"Passwords do not match"});
-    return
-  }
-  if (req.body.username.length < 4){
-    res.render('signup', {status:"Username must have at least 4 characters"});
-    return
-  }
-  userFile.addUser(req.body.username, req.body.password2, req.body.email, function(){
-    statsFile.addstatuser(req.body.username);
-    req.sessionStore.authedUser = req.body.username;
-    res.redirect('/');
-    return
-  })
 });
 app.post("/logout", function (req, res) {
   req.sessionStore.authedUser = undefined;

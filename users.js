@@ -27,17 +27,35 @@ var checkLogin = function (usrname, pass, callback){
   });
 }
 
-var checkExistingUsers = function(username, email, callback){
+var checkExistingUsers = function(request, callback){
+  var valid = true;
+  if (request.body.username === undefined || request.body.password1 === undefined || request.body.password2 === undefined){
+    callback(true, "One field is undefined, please try again using valid characters.");
+    return
+  }
+  if (request.body.password1.length < 4){
+    callback(true, "Password must have at least 4 characters");
+    return
+  }
+  if (request.body.password1 !== request.body.password2){
+    callback(true, "Passwords do not match");
+    return
+  }
+  if (request.body.username.length < 4){
+    callback(true, "Username must have at least 4 characters");
+    return
+  }
   userDataFile.users.map((x) =>{
-    if (x.username.toLowerCase() === username){
+    if (x.username.toLowerCase() === request.body.username.toLowerCase()){
       callback(true, "Username already exists, choose another user name");
-      return
+      return valid = false
     }
-    if (x.email.toLowerCase() === email){
+    if (x.email.toLowerCase() === request.body.email.toLowerCase() && request.body.email !== ""){
       callback(true, "Email already exists. Lost your Username or Password? Email me!");
-      return
+      return valid = false
     }
   });
+  if (valid === false){return}else if(valid === true){callback()};
 }
 
 var addUser = function(newusername, newpassword, newemail, callback){
