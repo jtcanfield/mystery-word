@@ -28,7 +28,6 @@ if (timekeeper){
       var mins = Math.floor((timeTaken % (1000 * 60 * 60)) / (1000 * 60));
       var secs = Math.floor((timeTaken % (1000 * 60)) / 1000);
       finalTime = mins + "m " + secs + "s ";
-      console.log(finalTime);
     }, 1000);
   };
   timerBeginCount();
@@ -58,7 +57,6 @@ if (fullstats !== null){
 var profilepage = document.getElementById("profilepageinfo");
 if (profilepage !== null){
   var jsonObject = JSON.parse(profilepage.textContent);
-  console.log(jsonObject)
   profilepage.innerHTML = "";
   var newliteral = document.createElement("div");
   newliteral.setAttribute("class", "playerstats");

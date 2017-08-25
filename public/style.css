@@ -50,24 +50,20 @@ html {
   text-align: center;
   padding-top: 80px;
 }
+#loginbody{
+  text-align: center;
+  padding-top: 80px;
+  transform: translateY(50%);
+}
 #pregame{
   text-align: center;
-  width: 80%;
+  width: 100%;
 }
 #pregame button{
+  width: 30%;
   height: 100px;
-  width: 100px;
 }
-#pregame form:nth-child(1){
-  float: left;
-  /*transform: translateX(25%);*/
-}
-#pregame form:nth-child(2){
-  height: 100px;
-  width: 100px;
-  transform: translateX(0%);
-}
-#pregame form:nth-child(3){
-  float: right;
-  /*transform: translateX(75%);*/
+#pregame form{
+  width: 33%;
+  display: inline;
 }
