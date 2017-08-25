@@ -61,7 +61,7 @@ h1, h2{
 #loginbody{
   text-align: center;
   padding-top: 80px;
-  transform: translateY(25%);
+  transform: translateY(20%);
   font-size: 30px;
 }
 #loginbody p{
@@ -76,7 +76,20 @@ h1, h2{
 #loginbody button{
   text-align: center;
   font-size: 30px;
-  border-radius: 100px;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  border: 5px outset;
+  background-color: rgb(190, 190, 190);
+  transition: all 0.5s;
+}
+#loginbody button:hover{
+  transform: scale(1.1);
+  background-color: rgb(150, 150, 150);
+  border: 5px inset;
+}
+#loginbody button:active{
+  transform: scale(0.9);
 }
 #indexbody h2{
   font-size: 40px;
