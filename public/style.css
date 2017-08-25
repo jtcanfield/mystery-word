@@ -5,6 +5,10 @@ html {
   background-color: rgb(230, 255, 255);
   font: 15px arial, sans-serif;
 }
+@keyframes fadeout {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
 #timeholder{
   pointer-events: none;
   opacity: 0;
@@ -102,6 +106,10 @@ html {
   height: 50px;
   font-size: 40px;
   width: 150px;
+}
+#letterstatus{
+  animation: fadeout 5s ease-in 1;
+  opacity: 0;
 }
 #mysterywordbody h2{
   font-size: 70px;
