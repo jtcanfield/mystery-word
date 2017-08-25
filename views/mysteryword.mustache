@@ -29,7 +29,7 @@
         <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required autofocus>
         <div id="timeholder"><input id="timekeeper" name="timer" value="{{time}}"></div>
       </form>
-      <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
+      <p id="letterstatus">{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
       {{/game}}
       {{#gamefinal}}
       <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
