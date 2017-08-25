@@ -2,3 +2,5 @@
 *node_modules/
 .DS_Store
 npm-debug.log
+/node-js-getting-started
+*node-js-getting-started/

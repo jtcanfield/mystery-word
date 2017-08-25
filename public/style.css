@@ -3,6 +3,7 @@ input[type=checkbox]:checked + label.strikethrough{
 }
 html {
   background-color: rgb(230, 255, 255);
+  font: 15px arial, sans-serif;
 }
 #timeholder{
   pointer-events: none;
@@ -66,4 +67,10 @@ html {
 #pregame form{
   width: 33%;
   display: inline;
+}
+.playerstats span{
+  padding: 15px;
+}
+#mysteryword{
+  text-transform: uppercase;
 }

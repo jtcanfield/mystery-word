@@ -21,6 +21,7 @@
     </div>
     <div id="body">
       {{#pregame}}
+      <h2>Mystery Word</h2>
       <div id="pregame">
         <form action="/startgameeasy" method="post"><button type="submit">Start Easy Game!</button></form>
         <form action="/startgamemedium" method="post"><button type="submit">Start Medium Game!</button></form>
@@ -28,7 +29,7 @@
       </div>
       {{/pregame}}
       {{#game}}
-      <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
+      <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
       <p>Guesses Left:{{lives}}</p>
       <br>
@@ -41,7 +42,7 @@
       </form>
       {{/game}}
       {{#gamefinal}}
-      <h2>{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
+      <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
       <p>{{lives}}</p>
       <br>

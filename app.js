@@ -50,10 +50,12 @@ app.get("/signup", function (req, res) {
 app.get("/statistics", function (req, res) {
   statsFile.pullStats(function(x){
     if (req.sessionStore.authedUser === undefined){
+      // res.json({stats: x});
       res.render("statistics", {stats:x});
       return
     }
     if (req.sessionStore.authedUser !== undefined){
+      // res.json({stats: x});
       res.render("statistics", {stats:x, username:req.sessionStore.authedUser});
       return
     }
