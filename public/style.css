@@ -62,10 +62,8 @@ html {
   font-size: 30px;
   border-radius: 100px;
 }
-#loginbody input[type=text], #loginbody input[type=password]{
-  text-align: center;
-  font-size: 30px;
-  border-radius: 100px;
+#indexbody h2{
+  font-size: 40px;
 }
 #pregame{
   text-align: center;
@@ -74,9 +72,9 @@ html {
 #pregame button{
   width: 30%;
   height: 100px;
+  font-size: 30px;
 }
 #pregame form{
-  width: 33%;
   display: inline;
 }
 .playerstats span{
