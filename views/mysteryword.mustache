@@ -26,7 +26,7 @@
       <p>Guesses Left:{{lives}}</p>
       <form action="/submitletter" method="post">
         <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required autofocus>
-        <button type="submit">Submit</button>
+        <button type="submit">Guess!</button>
         <div id="timeholder"><input id="timekeeper" name="timer" value="{{time}}"></div>
       </form>
       <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>

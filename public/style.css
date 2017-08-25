@@ -96,8 +96,11 @@ html {
   border: 3px ridge #d123d1;
 }
 #mysterywordbody button{
-  transform: translateY(-25%);
-  height: 55px;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  height: 50px;
+  width: 100px;
 }
 #mysterywordbody h2{
   font-size: 70px;
