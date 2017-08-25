@@ -32,9 +32,11 @@ function timerBeginCount(){
   }, 1000);
 };
 
+
+//BEGIN GETS
 app.get("/", function (req, res) {
   if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
-  res.render("index", {pregame:"active",username : req.sessionStore.authedUser});
+  res.render("index", {username : req.sessionStore.authedUser});
 });
 
 app.get("/login", function (req, res) {
@@ -46,23 +48,25 @@ app.get("/signup", function (req, res) {
   req.sessionStore.authedUser = undefined;
   res.render("signup");
 });
+app.get("/mysteryword", function (req, res) {
+  if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
+  res.render('mysteryword');
+});
+
 
 app.get("/statistics", function (req, res) {
   statsFile.pullStats(function(x){
-    if (req.sessionStore.authedUser === undefined){
-      // res.json({stats: x});
-      res.render("statistics", {stats:x});
-      return
-    }
-    if (req.sessionStore.authedUser !== undefined){
-      // res.json({stats: x});
-      res.render("statistics", {stats:x, username:req.sessionStore.authedUser});
-      return
-    }
+    // res.json({stats: x});
+    res.render("statistics", {stats:x, username:req.sessionStore.authedUser});
   });
 });
+//END GETS
 
+//BEGIN POSTS
 app.post("/", function (req, res) {
+  res.redirect('/');
+});
+app.post("/mysteryword", function (req, res) {
   res.redirect('/');
 });
 
@@ -116,7 +120,10 @@ app.post("/startgame:dynamic", function (req, res) {
   gameActive = true;
   timerBeginCount();
   console.log(req.sessionStore);
-  res.render("index", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"});
+  // var encodedstring = encodeURIComponent('{game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"}');
+  // console.log(decodeURIComponent(encodedstring));
+  // res.redirect("/mysteryword" + encodedstring);
+  res.render("mysteryword", {game:"active",emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:"0", letterstatus:"Go!"});
 });
 
 app.post("/submitletter", function (req, res) {
@@ -125,11 +132,11 @@ app.post("/submitletter", function (req, res) {
   if (gameActive === true){
     var lettersubmitted = req.body.lettersubmitted.toLowerCase();
     if (isLetter(lettersubmitted) === false){//Input is not a letter
-      res.render("./index", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"That is not a letter..."});
+      res.render("mysteryword", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"That is not a letter..."});
       return
     }
     if (req.sessionStore.guessed.indexOf(lettersubmitted) !== -1){
-      res.render("index", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"You Already Guessed That Letter!"});
+      res.render("mysteryword", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"You Already Guessed That Letter!"});
       return
     }
     req.sessionStore.guessed.push(lettersubmitted);
@@ -143,12 +150,12 @@ app.post("/submitletter", function (req, res) {
           }
         });
         statsFile.changestats(req.sessionStore.authedUser, 0, 1, req.sessionStore.word, req.sessionStore.word.length, timeTaken, "Loss");
-        res.render("index", {gamefinal:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
+        res.render("mysteryword", {gamefinal:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: "Out of lives!", time:timeTaken, letterstatus:"Wrong!"});
         clearInterval(x);
         gameActive = false;
         return
       } else {
-        res.render("index", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Wrong!"});
+        res.render("mysteryword", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Wrong!"});
       }
       return
     }
@@ -164,14 +171,14 @@ app.post("/submitletter", function (req, res) {
           gameWin = false;
         }
       });
-      if (gameWin === true){//GAME WIN HERE, EDIT INFO, MAKE IT LOOK BETTER
+      if (gameWin === true){//GAME WIN
         statsFile.changestats(req.sessionStore.authedUser, 1, 0, req.sessionStore.word, req.sessionStore.word.length, timeTaken, "Win");
-        res.render("index", {gamefinal:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Good Game!"});
+        res.render("mysteryword", {gamefinal:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Good Game!"});
         clearInterval(x);
         gameActive = false;
         return
       } else {
-        res.render("index", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Nice!"});
+        res.render("mysteryword", {game:"active",username:req.sessionStore.authedUser,emptyWord:req.sessionStore.emptyWord, guessed:req.sessionStore.guessed, lives: req.sessionStore.lives, time:timeTaken, letterstatus:"Nice!"});
       }
     } else {
       console.log("GAME BROKE!");
@@ -230,14 +237,7 @@ app.post("/statisticsredirect", function (req, res) {
 });
 app.get("/profile:dynamic", function (req, res) {
   statsFile.getspecificstats(req.params.dynamic, function(x){
-    if (req.sessionStore.authedUser === undefined){
-      res.render("profile", {stats:x});
-      return
-    }
-    if (req.sessionStore.authedUser !== undefined){
-      res.render("profile", {stats:x, username:req.sessionStore.authedUser});
-      return
-    }
+    res.render("profile", {stats:x, username:req.sessionStore.authedUser});
   });
 });
 app.get("/:dynamic", function (req, res) {

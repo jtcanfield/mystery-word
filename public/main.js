@@ -34,7 +34,7 @@ if (timekeeper){
 }
 //Edits URL to prevent incorrect refresh
 if (window.location.pathname === "/startgamehard" || window.location.pathname === "/startgamemedium" ||  window.location.pathname === "/startgameeasy" ||  window.location.pathname === "/submitletter"){
-  window.history.pushState("", "", '/');
+  window.history.pushState("", "", '/mysteryword');
 }
 //Statistics Page
 var fullstats = document.getElementById("fullstatistics");
