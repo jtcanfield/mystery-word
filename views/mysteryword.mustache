@@ -19,7 +19,7 @@
       <form action="/" method="post"><button type="submit">Play!</button></form>
       <form action="/logout" method="post"><button type="submit">Logout</button></form>
     </div>
-    <div class="body" id="body">
+    <div class="body" id="mysterywordbody">
       {{#game}}
       <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
