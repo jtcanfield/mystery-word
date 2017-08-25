@@ -25,7 +25,6 @@
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
       <p>Guesses Left:{{lives}}</p>
       <form action="/submitletter" method="post">
-        <button type="submit">Submit</button>
         <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required autofocus>
         <button type="submit">Submit</button>
         <div id="timeholder"><input id="timekeeper" name="timer" value="{{time}}"></div>

@@ -88,11 +88,16 @@ html {
   text-align: center;
   width: 45px;
   height: 45px;
+  outline-color: rgb(171,0,190);
+  background-color: rgb(230, 255, 255);
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border: 3px ridge #d123d1;
 }
 #mysterywordbody button{
   transform: translateY(-25%);
-  height: 50px;
-  margin: 0;
+  height: 55px;
 }
 #mysterywordbody h2{
   font-size: 70px;
