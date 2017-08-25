@@ -2,7 +2,7 @@ input[type=checkbox]:checked + label.strikethrough{
   text-decoration: line-through;
 }
 html {
-
+  background-color: rgb(230, 255, 255);
 }
 #timeholder{
   pointer-events: none;
@@ -49,5 +49,25 @@ html {
 #body{
   text-align: center;
   padding-top: 80px;
-  transform: translateY(50%);
+}
+#pregame{
+  text-align: center;
+  width: 80%;
+}
+#pregame button{
+  height: 100px;
+  width: 100px;
+}
+#pregame form:nth-child(1){
+  float: left;
+  /*transform: translateX(25%);*/
+}
+#pregame form:nth-child(2){
+  height: 100px;
+  width: 100px;
+  transform: translateX(0%);
+}
+#pregame form:nth-child(3){
+  float: right;
+  /*transform: translateX(75%);*/
 }
