@@ -24,22 +24,18 @@
       <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
       <p>Guesses Left:{{lives}}</p>
-      <br>
-      <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
-      <br>
       <form action="/submitletter" method="post">
-        <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required>
+        <input type="text" name="lettersubmitted" maxlength="1" style="text-transform:uppercase" required autofocus>
         <div id="timeholder"><input id="timekeeper" name="timer" value="{{time}}"></div>
         <button type="submit">Submit</button>
       </form>
+      <p>{{#letterstatus}}{{letterstatus}}{{/letterstatus}}</p>
       {{/game}}
       {{#gamefinal}}
       <h2 id="mysteryword">{{#emptyWord}} {{.}} {{/emptyWord}}</h2>
       <p>Letters Guessed so far:{{#guessed}} {{.}},{{/guessed}}</p>
       <p>{{lives}}</p>
-      <br>
       <p>{{letterstatus}}</p>
-      <br>
       <form action="/" method="post"><button type="submit">Play Again!</button></form>
       {{/gamefinal}}
     </div>

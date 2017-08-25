@@ -50,7 +50,7 @@ app.get("/signup", function (req, res) {
 });
 app.get("/mysteryword", function (req, res) {
   if (req.sessionStore.authedUser === undefined){res.redirect('/login');return}
-  res.render('mysteryword');
+  res.redirect('/');
 });
 
 
